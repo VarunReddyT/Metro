@@ -21,7 +21,9 @@ export default function HomePage() {
         console.log('source:', source);
         console.log('destination:', destination);
         try {
-            const response = await axios.get(`http://localhost:5000/path/${source}/${destination}`);
+            const encodedSource = encodeURIComponent(source);
+            const encodedDestination = encodeURIComponent(destination);
+            const response = await axios.get(`https://metro-murex.vercel.app/path/${encodedSource}/${encodedDestination}`);
             setPath(response.data.path);
             setFare(response.data.fare);
             setDistance(response.data.distance);

@@ -1,6 +1,6 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
-
+from urllib.parse import unquote
 import networkx as nx
 
 app = Flask(__name__)
@@ -113,6 +113,8 @@ def calculate_fare(dist):
 
 @app.route('/path/<start>/<end>')
 def find_path(start, end):
+    start = unquote(start)
+    end = unquote(end)
     paths = list(dfs_path(G, start, end))
     if paths:
         mid = []
