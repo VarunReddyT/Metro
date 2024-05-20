@@ -122,6 +122,7 @@ def find_path(start, end):
         min_distance_index = distances.index(min(distances))
         min_distance_path = paths[min_distance_index]
         min_distance = distances[min_distance_index]
+        min_distance = round(min_distance, 2)
         fare = calculate_fare(min_distance)
         if "Ameerpet" in min_distance_path and start != "Ameerpet" and end != "Ameerpet":
             mid.append("Ameerpet")
