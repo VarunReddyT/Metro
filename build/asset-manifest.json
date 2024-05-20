@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.e0f76fbd.css",
+    "main.js": "/static/js/main.a068fa78.js",
+    "static/js/453.94e511c7.chunk.js": "/static/js/453.94e511c7.chunk.js",
+    "static/media/metroView.jpg": "/static/media/metroView.c4e3b5f73ccd4d845cc6.jpg",
+    "index.html": "/index.html",
+    "main.e0f76fbd.css.map": "/static/css/main.e0f76fbd.css.map",
+    "main.a068fa78.js.map": "/static/js/main.a068fa78.js.map",
+    "453.94e511c7.chunk.js.map": "/static/js/453.94e511c7.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e0f76fbd.css",
+    "static/js/main.a068fa78.js"
+  ]
+}

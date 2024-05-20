@@ -42,7 +42,7 @@ export default function HomePage() {
                             </div>
                         </div>
                         <div>
-                            <img className='metImg' src="/Images/hydM.png" alt="HydM" />
+                            <img className='metImg' src="/images/hydM.png" alt="HydM" />
                         </div>
                     </div>
                     <div className='d-flex justify-content-center align-items-center journey'>
