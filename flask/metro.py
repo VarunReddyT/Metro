@@ -123,11 +123,11 @@ def find_path(start, end):
         min_distance_path = paths[min_distance_index]
         min_distance = distances[min_distance_index]
         fare = calculate_fare(min_distance)
-        if "Ameerpet" in min_distance_path:
+        if "Ameerpet" in min_distance_path and start != "Ameerpet" and end != "Ameerpet":
             mid.append("Ameerpet")
-        if "Mg Bus Station" in min_distance_path:
+        if "Mg Bus Station" in min_distance_path and start != "Mg Bus Station" and end != "Mg Bus Station":
             mid.append("Mg Bus Station")
-        if "Parade Ground" in min_distance_path:
+        if "Parade Ground" in min_distance_path and start != "Parade Ground" and end != "Parade Ground":
             mid.append("Parade Ground")
         
         if len(mid) == 0:

@@ -44,8 +44,8 @@
     border-color: #00ff6a;
 }
 
-.btn{
-    background-color: #2980b9;
+.check{
+    background-color: #0099ff;
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
@@ -54,11 +54,10 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     animation: slideInFromLeft 1.5s ease-in-out;
+    box-shadow: 3px 4px 0px 1px #E99F4C;
 }
 
-.btn:hover {
-    background-color: #0059ff;
-}
+
 
 .metImg {
     width: 100%;
