@@ -1,43 +1,46 @@
-
-
-
-
 @media (max-width: 768px) {
     .details {
         color: #fff;
-        background-color: #3498db; 
+        /* background-color: #3498db;  */
         display: flex;
         flex-direction: column;
         align-items: center;
         width: 100%;
         padding: 20px;
+        height: 500px;
+        
     }
 }
 @media (min-width: 768px) {
     .details {
-        background-color: #3498db; 
+        /* background-color: #3498db;  */
         display: flex;
         align-items: center;
+        height: 500px;
     }
     
 }
 
 .select-container {
-    margin-top: 50px;
+    margin-top: 30px;
     width: 100%;
     max-width: 500px;
+    
+}
+
+.select-container.with-transition {
     animation: slideInFromLeft 1.5s ease-in-out;
 }
 
 .select-box {
     padding: 10px;
     margin-bottom: 10px;
-    border: 2px solid #2980b9;
     border-radius: 5px;
     font-size: 1em;
     width: 100%;
     outline: none;
     transition: border-color 0.3s ease;
+    box-shadow: 3px 4px 0px 1px #E99F4C;
 }
 
 .select-box:focus {
@@ -56,6 +59,9 @@
     animation: slideInFromLeft 1.5s ease-in-out;
     box-shadow: 3px 4px 0px 1px #E99F4C;
 }
+.check:hover {
+    background-color: #0099ff;
+}
 
 
 
@@ -72,7 +78,7 @@
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 90%;
-    max-width: 500px;
+    max-width: 600px;
     margin-top: 20px;
 }
 
@@ -83,7 +89,6 @@
 
 .card-text {
     font-size: 1.2em;
-    margin-bottom: 10px;
 }
 
 @keyframes slideInFromRight {
@@ -106,4 +111,17 @@
         transform: translateX(0);
         opacity: 1;
     }
+}
+
+
+.journey{
+    background-color: rgb(255, 237, 215);
+}
+
+.det{
+    background-image: url('/Images/metroView.jpg');
+}
+.trip{
+    font-size: 40px;
+    font-weight: bold;
 }

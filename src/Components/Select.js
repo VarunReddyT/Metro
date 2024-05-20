@@ -1,7 +1,7 @@
 import React from 'react';
 import stations from './stations.js';
 
-export default function Select({ setSource, setDestination }) {
+export default function Select({ setSource, setDestination,transition }) {
     const handleSourceChange = (event) => {
         setSource(event.target.value);
     };
@@ -11,7 +11,7 @@ export default function Select({ setSource, setDestination }) {
     };
 
     return (
-        <div>
+        <div className={`d-flex select-container ${transition ? 'with-transition' : ''}`}>
             <div className='d-flex select-container'>
                 <select
                     name="source"

@@ -1,8 +1,5 @@
 .container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+    
     text-align: center;
   }
   
@@ -22,7 +19,7 @@
   .title {
     color: #264143;
     font-weight: 900;
-    font-size: 1.5em;
+    font-size: 2em;
     margin-top: 20px;
   }
   
@@ -67,3 +64,20 @@
   .btn1:hover {
     opacity: .9;
   }
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.exp{
+  background-color: rgb(255, 237, 215);
+}

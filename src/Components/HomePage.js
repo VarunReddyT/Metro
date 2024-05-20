@@ -29,33 +29,35 @@ export default function HomePage() {
     return (
         <>
             <div className="mainC">
-                <div className=''>
+                {/* <div className=''>
                     <h1 className='text-center p-2'>Hyderabad Metro Rail</h1>
-                </div>
-                <div className='d-flex justify-content-center details'>
-                    <div>
-                        <h3 className='text-center mt-5'>Find Trip Details</h3>
-                        <Select setDestination={setDestination} setSource={setSource} />
-                        <div className='d-flex justify-content-center align-items-center'>
-                            <button className='btn btn-lg mt-4 check' onClick={handleSubmit}>Check</button>
+                </div> */}
+                <div className='det'>
+                    <div className='d-flex justify-content-center details '>
+                        <div>
+                            <h3 className='text-center mt-5 trip'>Find Trip Details</h3>
+                            <Select setDestination={setDestination} setSource={setSource} transition={true} />
+                            <div className='d-flex justify-content-center align-items-center'>
+                                <button className='btn btn-lg mt-4 check' onClick={handleSubmit}>Check</button>
+                            </div>
+                        </div>
+                        <div>
+                            <img className='metImg' src="/Images/hydM.png" alt="HydM" />
                         </div>
                     </div>
-                    <div>
-                        <img className='metImg' src="/Images/hydM.png" alt="HydM" />
-                    </div>
-                </div>
-                <div className='d-flex justify-content-center align-items-center'>
-                    <div className='card mt-4'>
-                        <div className='card-body'>
-                            <h5 className='card-title'>Journey Details</h5>
-                            <p className='card-text'>Path: {path}</p>
-                            <p className='card-text'>Distance: {distance}</p>
-                            <p className='card-text'>Fare: {fare}</p>
+                    <div className='d-flex justify-content-center align-items-center journey'>
+                        <div className='card'>
+                            <div className='card-body'>
+                                <h5 className='card-title'>Journey Details</h5>
+                                <p className='card-text'>Path: {path}</p>
+                                <p className='card-text'>Distance: {distance} km</p>
+                                <p className='card-text'>Fare: ₹ {fare}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className='mt-5'>
+            <div>
                 <Compare />
             </div>
         </>
