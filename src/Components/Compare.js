@@ -67,7 +67,7 @@ export default function Compare() {
                                     <label className="sub_title">Petrol Price (in rupees)</label>
                                     <input placeholder="Enter Petrol Price in your area" onChange={handlePetrolPrice} className="form_style" type="number" />
                                 </div>
-                                {view && <div className="form_group">
+                                {view && <div className="form_group expense">
                                     <p className="sub_title">Total Expenses : {totalExpensesV}</p>
                                 </div>
                                 }
@@ -81,7 +81,7 @@ export default function Compare() {
                                     <label className="sub_title" htmlFor="name">Extra expenses(if any)</label>
                                     <input placeholder="Expenses for other transport" onChange={handleExtraExpenses} className="form_style" type="number" />
                                 </div>
-                                {view && <div className="form_group">
+                                {view && <div className="form_group expense">
                                     <p className="sub_title">Fare : {fare}</p>
                                     <p className="sub_title">Total Expenses : {totalExpensesM}</p>
                                 </div>

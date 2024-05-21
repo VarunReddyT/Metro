@@ -1,0 +1,8 @@
+.ticketDiv{
+    /* background-color: aqua; */
+    padding: 40px;
+    width : 50%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}

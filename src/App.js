@@ -12,7 +12,7 @@ function App() {
         <Route path='/tickets' element={<Tickets/>}/>
         <Route path='/smartcard' element={<SmartCard/>}/>
       </Routes>
-    </Router>``
+    </Router>
     </>
   );
 }

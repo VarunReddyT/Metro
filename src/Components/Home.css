@@ -13,7 +13,13 @@
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        height: 100vh;
+        height: 60vh;
+    }
+    .metImg {
+        border-radius: 200px;
+        width: 200px;
+        animation: slideInFromRight 1.5s ease-in-out;
+        margin-top: 20px;
     }
     
 }
@@ -27,10 +33,16 @@
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        height: 60vh;
+        height: 50vh;
 }
     .journey{
         margin-left: 50px;
+    }
+    .metImg {
+        border-radius: 200px;
+        width: 200px;
+        animation: slideInFromRight 1.5s ease-in-out;
+        margin-left: 60px;
     }
     
 }
@@ -76,12 +88,7 @@
 
 
 
-.metImg {
-    width: 100%;
-    height: auto;
-    max-width: 500px;
-    animation: slideInFromRight 1.5s ease-in-out;
-}
+
 
 .card {
     background-color: #fff; 
@@ -127,4 +134,9 @@
 .trip{
     font-size: 40px;
     font-weight: bold;
+    color: #fff;
+    animation: slideInFromRight 1.5s ease-in-out;
+
 }
+
+

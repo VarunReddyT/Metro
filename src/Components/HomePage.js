@@ -5,7 +5,7 @@ import Select from './Select.js';
 import './Compare.css';
 import Navbar from './Navbar.js';
 
-import { Link } from 'react-router-dom';
+
 export default function HomePage() {
     const [source, setSource] = useState('');
     const [destination, setDestination] = useState('');
@@ -43,14 +43,14 @@ export default function HomePage() {
                     <div className='d-flex justify-content-center details '>
 
                         <div>
-                            <h3 className='text-center mt-5 trip'>Find Trip Details</h3>
+                            <h3 className='text-center mt-5 trip '>Find Trip Details</h3>
                             <Select setDestination={setDestination} setSource={setSource} transition={true} />
                             <div className='d-flex justify-content-center align-items-center'>
                                 <button className='btn btn-lg mt-4 check' onClick={handleSubmit}>Check</button>
                             </div>
                         </div>
                         {view && <div>
-                            <img className='metImg' src={require("../images/hydM.png")} alt="HydM" />
+                            <img className='metImg' src={require("../images/Hyd_metro.png")} alt="HydM" />
                         </div>}
                         {!view && 
                         <div className='d-flex justify-content-center align-items-center journey'>
