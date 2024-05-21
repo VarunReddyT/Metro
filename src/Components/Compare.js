@@ -60,8 +60,8 @@ export default function Compare() {
                                     <input placeholder="Enter Vehicle Mileage" onChange={handleMileage} className="form_style" type="number" />
                                 </div>
                                 <div className="form_group">
-                                    <label className="sub_title">Daily Travel Distance (in km)</label>
-                                    <input placeholder="Enter distance of travel" onChange={handleDailyDistance} className="form_style" type="number" />
+                                    <label className="sub_title">Travel Distance (in km)</label>
+                                    <input placeholder="Enter distance of travel (One Trip)" onChange={handleDailyDistance} className="form_style" type="number" />
                                 </div>
                                 <div className="form_group">
                                     <label className="sub_title">Petrol Price (in rupees)</label>
