@@ -7,7 +7,7 @@
         align-items: center;
         width: 100%;
         padding: 20px;
-        height: 500px;
+
         
     }
 }
@@ -16,15 +16,13 @@
         /* background-color: #3498db;  */
         display: flex;
         align-items: center;
-        height: 500px;
+
     }
     
 }
 
 .select-container {
     margin-top: 30px;
-    width: 100%;
-    max-width: 500px;
     
 }
 
@@ -37,7 +35,6 @@
     margin-bottom: 10px;
     border-radius: 5px;
     font-size: 1em;
-    width: 100%;
     outline: none;
     transition: border-color 0.3s ease;
     box-shadow: 3px 4px 0px 1px #E99F4C;
@@ -114,12 +111,12 @@
 }
 
 
-.journey{
-    background-color: rgb(255, 237, 215);
-}
-
 .det{
     background-image: url('../images/metroView.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 60vh;
 }
 .trip{
     font-size: 40px;

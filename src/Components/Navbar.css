@@ -1,0 +1,33 @@
+.tab-container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 2px;
+    background-color: #dadadb;
+    border-radius: 9px;
+    animation: slideInFromTop 1.5s ease-in-out;
+    text-align: center;
+}
+
+.btn{
+
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.btn:hover {    
+    background-color: #f1f1f1;
+}
+
+@keyframes slideInFromTop {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

@@ -16,7 +16,7 @@ export default function Compare() {
     const [destination, setDestination] = useState('')
     const [fare, setFare] = useState('')
 
-    const handleMilage = (e) => {
+    const handleMileage = (e) => {
         setMileage(e.target.value)
     }
     const handleDailyDistance = (e) => {
@@ -52,12 +52,12 @@ export default function Compare() {
                 <div className="form_area">
                     <p className="title">Compare expenses</p>
                     <form className='p-5' onSubmit={handleSubmit}>
-                        <div className='d-flex'>
+                        <div className='d-flex both'>
                             <div>
                                 <h3 className='mb-4'>Vehicle</h3>
                                 <div className="form_group">
                                     <label className="sub_title">Mileage (in km)</label>
-                                    <input placeholder="Enter Vehicle Mileage" onChange={handleMilage} className="form_style" type="number" />
+                                    <input placeholder="Enter Vehicle Mileage" onChange={handleMileage} className="form_style" type="number" />
                                 </div>
                                 <div className="form_group">
                                     <label className="sub_title">Daily Distance Travel (in km)</label>
