@@ -33,7 +33,7 @@ export default function Compare() {
     const handleSubmit = async(e) => {
         e.preventDefault()
         const totalExpenses = (dailyDistance / mileage) * petrolPrice
-        setTotalExpensesV(totalExpenses)
+        setTotalExpensesV(totalExpenses.toFixed(2));
         try{
             const response = await axios.get(`https://metro-murex.vercel.app/path/${source}/${destination}`)
             const fareValue = response.data.fare;
@@ -60,8 +60,8 @@ export default function Compare() {
                                     <input placeholder="Enter Vehicle Mileage" onChange={handleMileage} className="form_style" type="number" />
                                 </div>
                                 <div className="form_group">
-                                    <label className="sub_title">Daily Distance Travel (in km)</label>
-                                    <input placeholder="Enter distance of daily travel" onChange={handleDailyDistance} className="form_style" type="number" />
+                                    <label className="sub_title">Daily Travel Distance (in km)</label>
+                                    <input placeholder="Enter distance of travel" onChange={handleDailyDistance} className="form_style" type="number" />
                                 </div>
                                 <div className="form_group">
                                     <label className="sub_title">Petrol Price (in rupees)</label>
@@ -79,7 +79,7 @@ export default function Compare() {
                                 </div>
                                 <div className="form_group">
                                     <label className="sub_title" htmlFor="name">Extra expenses(if any)</label>
-                                    <input placeholder="Expenses for other transport" onChange={handleExtraExpenses} className="form_style" type="text" />
+                                    <input placeholder="Expenses for other transport" onChange={handleExtraExpenses} className="form_style" type="number" />
                                 </div>
                                 {view && <div className="form_group">
                                     <p className="sub_title">Fare : {fare}</p>
