@@ -72,7 +72,7 @@ export default function Compare() {
                                 </div>
                                 }
                             </div>
-                            <div className='ms-5' style={{ marginLeft: 10 }}>
+                            <div className='metro'>
                                 <h3>Metro</h3>
                                 <div>
                                     <Select transition={false} setSource={setSource} setDestination={setDestination}/>

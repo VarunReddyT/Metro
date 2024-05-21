@@ -81,6 +81,13 @@ input[type=number] {
     display: flex;
     flex-direction: column;
   }
+ 
+}
+
+@media (min-width: 768px) {
+  .metro{
+    margin-left: 20px;
+  }
 }
 
 .expense{
