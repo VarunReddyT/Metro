@@ -3,7 +3,9 @@ import axios from 'axios';
 import Compare from './Compare.js';
 import Select from './Select.js';
 import './Compare.css';
-import './Navbar.css';
+import Navbar from './Navbar.js';
+
+import { Link } from 'react-router-dom';
 export default function HomePage() {
     const [source, setSource] = useState('');
     const [destination, setDestination] = useState('');
@@ -37,17 +39,7 @@ export default function HomePage() {
                 </div> */}
 
                 <div className='det'>
-                    <nav className='d-flex justify-content-center align-items-center'>
-                        <div className="tab-container mt-5">
-                            <button className='btn'>Fare</button>
-
-                            <button className='btn'>Tickets</button>
-
-                            <button className='btn'>Smart Card</button>
-
-                        </div>
-
-                    </nav>
+                    <Navbar/>
                     <div className='d-flex justify-content-center details '>
 
                         <div>
