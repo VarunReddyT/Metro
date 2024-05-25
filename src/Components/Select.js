@@ -21,7 +21,7 @@ export default function Select({ setSource, setDestination,transition }) {
                     onChange={handleSourceChange}
                     required
                 >
-                    <option value="">Select Source</option>
+                    <option value="">Source</option>
                     {stations.map((station, index) => (
                         <option key={index} value={station}>{station}</option>
                     ))}
@@ -33,7 +33,7 @@ export default function Select({ setSource, setDestination,transition }) {
                     onChange={handleDestinationChange}
                     required
                 >
-                    <option value="">Select Destination</option>
+                    <option value="">Destination</option>
                     {stations.map((station, index) => (
                         <option key={index} value={station}>{station}</option>
                     ))}

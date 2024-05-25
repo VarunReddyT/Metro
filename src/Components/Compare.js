@@ -30,18 +30,18 @@ export default function Compare() {
         setExtraExpenses(e.target.value)
     }
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         const totalExpenses = (dailyDistance / mileage) * petrolPrice
         setTotalExpensesV(totalExpenses.toFixed(2));
-        try{
+        try {
             const response = await axios.get(`https://metro-murex.vercel.app/path/${source}/${destination}`)
             const fareValue = response.data.fare;
             setFare(fareValue)
             setTotalExpensesM(parseInt(fareValue) + parseInt(extraExpenses))
             setView(true)
         }
-        catch(error){
+        catch (error) {
             console.error('Error fetching data:', error)
         }
     }
@@ -75,7 +75,7 @@ export default function Compare() {
                             <div className='metro'>
                                 <h3>Metro</h3>
                                 <div>
-                                    <Select transition={false} setSource={setSource} setDestination={setDestination}/>
+                                    <Select transition={false} setSource={setSource} setDestination={setDestination} />
                                 </div>
                                 <div className="form_group">
                                     <label className="sub_title" htmlFor="name">Extra expenses(if any)</label>
