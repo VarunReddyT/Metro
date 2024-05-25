@@ -23,7 +23,7 @@ export default function Tickets() {
     setView(true);
     if(content === 'UPI') {
       try {
-        const response = await axios.get('http://localhost:5000/qrcode');
+        const response = await axios.get('https://metro-murex.vercel.app/qrcode');
         setQrCode(response.data.qrcode);
       } catch (error) {
         console.error('Error fetching QR code:', error);
