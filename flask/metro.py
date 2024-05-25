@@ -157,6 +157,7 @@ def generate_qr_code():
     img = qr.make_image(fill_color="black", back_color="white")
 
     buffer = BytesIO()
+    img.save(buffer)
     buffer.seek(0)
 
     img_str = base64.b64encode(buffer.getvalue()).decode()
