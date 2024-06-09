@@ -1,40 +1,95 @@
-import React from 'react';
-import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import React, { useState } from 'react';
+import './css/PaymentForm.css';
+import { useNavigate } from 'react-router-dom';
 
-const PaymentForm = () => {
-  const stripe = useStripe();
-  const elements = useElements();
+export default function PaymentForm() {
+  const [cardNumber, setCardNumber] = useState('');
+  const [expiryDate, setExpiryDate] = useState('');
+  const [cvc, setCvc] = useState('');
+  const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    if (!stripe || !elements) {
+  const handlePay = () => {
+    if(cardNumber === '' || expiryDate === '' || cvc === ''){
+      alert('Please fill all the fields');
       return;
     }
+    navigate('/bookedticket');
+  }
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
 
-    const cardElement = elements.getElement(CardElement);
-
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: 'card',
-      card: cardElement,
-    });
-
-    if (error) {
-      console.error('[error]', error);
-    } else {
-      console.log('[PaymentMethod]', paymentMethod);
-
+  const handleCardNumberChange = (e) => {
+    let value = e.target.value.replace(/\D/g, '');
+    value = value.replace(/\s/g, '').replace(/(\d{4})/g, '$1 ').trim();
+    if (value.length > 19) {
+      value = value.slice(0, 19);
     }
+    setCardNumber(value);
+  };
+
+  const handleExpiryDateChange = (e) => {
+    let value = e.target.value.replace(/\D/g, ''); 
+
+    if (value.length > 2 && value.charAt(2) !== '/') {
+      value = value.slice(0, 2) + '/' + value.slice(2);
+    } else if (value.length === 4 && e.nativeEvent.inputType === 'deleteContentBackward') {
+      value = value.slice(0, 2);
+    }
+
+    if (value.length > 5) {
+      value = value.slice(0, 5);
+    }
+    setExpiryDate(value);
+  };
+
+  const handleCvcChange = (e) => {
+    let value = e.target.value.replace(/\D/g, '');
+    if (value.length > 3) {
+      value = value.slice(0, 3);
+    }
+    setCvc(value);
   };
 
   return (
-    <form onSubmit={handleSubmit} className='payment-form'>
-      <CardElement />
-      <button type="submit" disabled={!stripe}>
-        Pay
-      </button>
-    </form>
+    <div className="payment-container">
+      <form onSubmit={handleSubmit} className="payment-form">
+        <h1>Payment Details</h1>
+        <div className="form-group">
+          <label htmlFor="cardNumber">Card Number</label>
+          <input
+            placeholder="Card Number"
+            type="text"
+            id="cardNumber"
+            value={cardNumber}
+            onChange={handleCardNumberChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="expiryDate">Expiry Date (MM/YY)</label>
+          <input
+            placeholder="MM/YY"
+            type="text"
+            id="expiryDate"
+            value={expiryDate}
+            onChange={handleExpiryDateChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="cvc">CVC/CVV</label>
+          <input
+            placeholder="CVC/CVV"
+            type="text"
+            id="cvc"
+            value={cvc}
+            onChange={handleCvcChange}
+            required
+          />
+        </div>
+        <button type="submit" onClick={handlePay}>Pay</button>
+      </form>
+    </div>
   );
-};
-
-export default PaymentForm;
+}

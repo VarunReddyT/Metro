@@ -91,11 +91,11 @@ input[type=number] {
 }
 
 .expense{
-  background-color: #f53adc;
+  background-color: #3ab0f5;
   color: white;
   box-shadow: 3px 4px 3px 3px #E99F4C;
-  padding: 10px 20px;
-  font-weight: bold;
+  padding: 10px;
+  font-weight: bolder;
   border-radius: 4px;
   margin-top: 20px;
 }

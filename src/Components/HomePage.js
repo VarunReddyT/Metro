@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Compare from './Compare.js';
 import Select from './Select.js';
-import './Compare.css';
+import './css/Compare.css';
 import Navbar from './Navbar.js';
-
+// import Loader from './Loader.js';
 
 export default function HomePage() {
     const [source, setSource] = useState('');
@@ -13,6 +13,9 @@ export default function HomePage() {
     const [fare, setFare] = useState('');
     const [distance, setDistance] = useState('');
     const [view, setView] = useState(true);
+    // const [text, setText] = useState('');
+    // const [chatHistory, setChatHistory] = useState([]);
+    // const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -29,19 +32,37 @@ export default function HomePage() {
         } catch (error) {
             console.error('Error fetching data:', error);
         }
-    }
+    };
+
+    // const handleApi = async (e) => {
+    //     e.preventDefault();
+    //     setLoading(true);
+    //     if (!text) return;
+
+    //     const userMessage = { sender: 'user', text };
+    //     setChatHistory([...chatHistory, userMessage]);
+
+    //     try {
+    //         const response = await axios.post('http://localhost:4000/api', { text });
+    //         const botMessage = { sender: 'bot', text: response.data };
+    //         setLoading(false);
+    //         setChatHistory([...chatHistory, userMessage, botMessage]);
+    //         setText('');
+    //     } catch (error) {
+    //         console.error('Error fetching data:', error);
+    //     }
+    // };
+
+    // const handleText = (e) => {
+    //     setText(e.target.value);
+    // };
 
     return (
         <>
             <div className="mainC">
-                {/* <div className=''>
-                    <h1 className='text-center p-2'>Hyderabad Metro Rail</h1>
-                </div> */}
-
                 <div className='det'>
-                    <Navbar/>
+                    <Navbar />
                     <div className='d-flex justify-content-center details '>
-
                         <div>
                             <h3 className='text-center mt-5 trip '>Find Trip Details</h3>
                             <Select setDestination={setDestination} setSource={setSource} transition={true} />
@@ -50,27 +71,37 @@ export default function HomePage() {
                             </div>
                         </div>
                         {view && <div>
-                            <img className='metImg' src={require("../images/Hyd_metro.png")} alt="HydM" />
+                            <img className='metImg' src={require("./images/Hyd_metro.png")} alt="HydM" />
                         </div>}
-                        {!view && 
-                        <div className='d-flex justify-content-center align-items-center journey'>
-                        <div className='card'>
-                            <div className='card-body'>
-                                <h5 className='card-title'>Journey Details</h5>
-                                <p className='card-text'>Path: {path}</p>
-                                <p className='card-text'>Distance: {distance} km</p>
-                                <p className='card-text'>Fare: ₹ {fare}</p>
-                            </div>
-                        </div>
-                    </div>}
-                         
+                        {!view &&
+                            <div className='d-flex justify-content-center align-items-center journey'>
+                                <div className='card'>
+                                    <div className='card-body'>
+                                        <h5 className='card-title'>Journey Details</h5>
+                                        <p className='card-text'>Path: {path}</p>
+                                        <p className='card-text'>Distance: {distance} km</p>
+                                        <p className='card-text'>Fare: ₹ {fare}</p>
+                                    </div>
+                                </div>
+                            </div>}
                     </div>
-                   
                 </div>
             </div>
             <div>
                 <Compare />
             </div>
+            {/* <div>
+                <input type="text" value={text} onChange={handleText} />
+                <button onClick={handleApi}>Submit</button>
+                <div className="chat-container">
+                    {chatHistory.map((message, index) => (
+                        <div key={index} className={`chat-message ${message.sender}`}>
+                            <p>{message.text}</p>
+                        </div>
+                    ))}
+                    {loading && <Loader/>}
+                </div>
+            </div> */}
         </>
     );
 }

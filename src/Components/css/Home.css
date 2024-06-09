@@ -9,16 +9,10 @@
  
     }
     .det{
-        background-image: url('../images/metroView.jpg');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
+        
         height: 90vh;
     }
     .metImg {
-        border-radius: 200px;
-        width: 200px;
-        animation: slideInFromRight 1.5s ease-in-out;
         margin-top: 20px;
     }
     
@@ -29,27 +23,33 @@
         align-items: center;
     }
     .det{
-        background-image: url('../images/metroView.jpg');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
         height: 50vh;
 }
     .journey{
         margin-left: 50px;
     }
     .metImg {
-        border-radius: 200px;
-        width: 200px;
-        animation: slideInFromRight 1.5s ease-in-out;
         margin-left: 60px;
     }
     
 }
 
+.det{
+    background-image: url('../images/metroView.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 .select-container {
     margin-top: 30px;
     
+}
+.metImg{
+    border-radius: 200px;
+    width: 200px;
+    animation: slideInFromRight 1.5s ease-in-out;
+    filter: drop-shadow(0 0 0.75rem #406bc7);
 }
 
 .select-container.with-transition {

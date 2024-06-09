@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import Navbar from './Navbar';
 import Select from './Select';
-import './Tickets.css';
+import './css/Tickets.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Loader from './Loader';
+import CancelTransaction from './CancelTransaction';
+import { TicketContext } from './TicketContext';
+import { useContext } from 'react';
 
 export default function Tickets() {
   const [source, setSource] = useState('');
@@ -12,16 +16,40 @@ export default function Tickets() {
   const [modalContent, setModalContent] = useState('');
   const [view, setView] = useState(false);
   const [qrCode, setQrCode] = useState('');
+  const [mobileNumber, setMobileNumber] = useState('');
+  const [mobileNumberError, setMobileNumberError] = useState('');
+  const [danger, setDanger] = useState(false);
   const navigate = useNavigate();
+  const [transacId, setTransacId] = useState('');
+  const [load, setLoad] = useState(false);
+  const { setTicketDetails } = useContext(TicketContext);
+  const mobileNumberPattern = /^[6-9]\d{9}$/;
 
   const openModal = async (content) => {
-    if(!check(source,destination,tickets)){
-      alert("Please fill all the details");
+    if (!check(source, destination, tickets, mobileNumber)) {
+      setDanger(true);
       return;
     }
+    setDanger(false);
     setModalContent(content);
     setView(true);
-    if(content === 'UPI') {
+    try{
+      const encodedSource = encodeURIComponent(source);
+      const encodedDestination = encodeURIComponent(destination);
+      const response = await axios.get(`https://metro-murex.vercel.app/path/${encodedSource}/${encodedDestination}`);
+      setTicketDetails({
+        source: source,
+        destination: destination,
+        tickets: tickets,
+        fare: response.data.fare,
+        paymentMode : content
+      });
+      
+    }
+    catch (error) {
+      console.error('Error fetching data:', error);
+    }
+    if (content === 'UPI') {
       try {
         const response = await axios.get('https://metro-murex.vercel.app/qrcode');
         setQrCode(response.data.qrcode);
@@ -35,22 +63,29 @@ export default function Tickets() {
     setView(false);
   };
 
-  const check = (source,destination,tickets) => {
-    if(source === '' || destination === '' || tickets === 0){
+  const check = (source, destination, tickets, mobileNumber) => {
+    if (source === '' || destination === '' || tickets === 0 || mobileNumber === '' || mobileNumberError) {
       return false;
     }
     return true;
-  }
+  };
 
-  const handleCardPayment= (event) => {
+  const handleCardPayment = (event) => {
     event.preventDefault();
-   
     navigate('/payment');
   };
 
   const handleUPIPayment = (event) => {
     event.preventDefault();
-    navigate('/booked-ticket');
+    if(transacId === ''){
+      alert('Please enter the transaction ID');
+      return;
+    }
+    setLoad(true);
+    setTimeout(() => {
+      setLoad(false); 
+      navigate('/bookedticket');
+      }, 2000);
   };
 
   const handleIncrement = () => {
@@ -65,11 +100,20 @@ export default function Tickets() {
     }
   };
 
-  console.log(source, destination);
+  const handleMobileNumberChange = (e) => {
+    const value = e.target.value;
+    if (mobileNumberPattern.test(value)) {
+      setMobileNumberError('');
+    } else {
+      setMobileNumberError('Invalid mobile number');
+    }
+    setMobileNumber(value);
+  };
 
   return (
     <div className="ticketsBody">
-      <Navbar />
+        <Navbar />
+        <CancelTransaction/>
       <div className="d-flex justify-content-center align-items-center">
         <div className="ticketDiv">
           <form className="formTicket">
@@ -84,13 +128,32 @@ export default function Tickets() {
               </div>
             </div>
             <div className="mt-4">
+              <input
+                type="number"
+                id="mobileNumber"
+                placeholder='Mobile Number'
+                value={mobileNumber}
+                onChange={handleMobileNumberChange}
+                className="form-control"
+              />
+              {mobileNumberError && (
+                <div className="alert alert-danger mt-2" role="alert">
+                  {mobileNumberError}
+                </div>
+              )}
+            </div>
+            <div className="mt-4">
               <button type="button" className="btn btn-primary sub-button" onClick={() => openModal('Card')}>
                 Pay with Card
               </button>
-              <button type="button" className="btn btn-primary sub-button" onClick={() => openModal('UPI')}>
+              <button type="button" className="btn btn-primary sub2-button" onClick={() => openModal('UPI')}>
                 Pay with UPI
               </button>
-
+              {danger && (
+                <div className="alert alert-danger mt-3" role="alert">
+                  Please fill all the fields
+                </div>
+              )}
               {view && (
                 <div className="modal-overlay">
                   <div className="modal-content">
@@ -98,13 +161,18 @@ export default function Tickets() {
                       <h5 className="modal-title">Confirmation</h5>
                       <button type="button" className="btn-close" onClick={closeModal}></button>
                     </div>
-                    <div className="modal-body ">
+                    <div className="modal-body">
                       {modalContent === 'Card' ? (
                         <div>Please enter your card details to proceed with the payment.</div>
                       ) : (
                         <div>
                           <p>Open the Google Pay app and complete the transaction.</p>
+                          <div className='d-grid' style={{placeItems:'center'}}>
+                            {!qrCode && <Loader />}
+                          </div>
                           {qrCode && <img src={`data:image/png;base64,${qrCode}`} alt="QR Code" />}
+                          <label></label>
+                          <input type='text' placeholder='Enter Transaction Id' onChange={(e) => setTransacId(e.target.value)}required/>
                         </div>
                       )}
                     </div>
@@ -113,17 +181,19 @@ export default function Tickets() {
                       {modalContent === 'Card' ? (
                         <button type="button" className="btn btn-primary submit-button" onClick={handleCardPayment}>Proceed to Payment</button>
                       ) : (
-                        <button type="button" className="btn btn-primary submit-button" onClick={handleUPIPayment}>I have completed the transaction</button>
+                        load ? <Loader /> : <button type="button" className="btn btn-primary submit-button" onClick={handleUPIPayment}>Submit</button>
                       )}
                     </div>
                   </div>
                 </div>
               )}
-
             </div>
           </form>
         </div>
       </div>
     </div>
   );
+
+
+
 }

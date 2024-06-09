@@ -1,8 +1,9 @@
 import React from 'react'
 import { useState } from 'react'
-import './Compare.css'
+import './css/Compare.css'
 import Select from './Select.js'
 import axios from 'axios'
+import Loader from './Loader.js'
 
 export default function Compare() {
     const [view, setView] = useState(false)
@@ -15,6 +16,7 @@ export default function Compare() {
     const [source, setSource] = useState('')
     const [destination, setDestination] = useState('')
     const [fare, setFare] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const handleMileage = (e) => {
         setMileage(e.target.value)
@@ -32,6 +34,8 @@ export default function Compare() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setView(false)
+        setLoading(true)
         const totalExpenses = (dailyDistance / mileage) * petrolPrice
         setTotalExpensesV(totalExpenses.toFixed(2));
         try {
@@ -39,6 +43,7 @@ export default function Compare() {
             const fareValue = response.data.fare;
             setFare(fareValue)
             setTotalExpensesM(parseInt(fareValue) + parseInt(extraExpenses))
+            setLoading(false)
             setView(true)
         }
         catch (error) {
@@ -47,7 +52,7 @@ export default function Compare() {
     }
 
     return (
-        <div className='exp '>
+        <div className='exp'>
             <div className="container ">
                 <div className="form_area">
                     <p className="title">Compare expenses</p>
@@ -67,7 +72,8 @@ export default function Compare() {
                                     <label className="sub_title">Petrol Price (in rupees)</label>
                                     <input placeholder="Enter Petrol Price in your area" onChange={handlePetrolPrice} className="form_style" type="number" />
                                 </div>
-                                {view && <div className="form_group expense">
+                                
+                                {view  && <div className="form_group expense">
                                     <p className="sub_title">Total Expenses : {totalExpensesV}</p>
                                 </div>
                                 }
@@ -87,6 +93,9 @@ export default function Compare() {
                                 </div>
                                 }
                             </div>
+                        </div>
+                        <div className='d-grid' style={{placeItems: 'center'}}>
+                            {loading && <Loader/>}
                         </div>
                         <div>
                             <button className="btn1">Check</button>

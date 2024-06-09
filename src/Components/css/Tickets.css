@@ -159,3 +159,19 @@ body {
 .sub-button:hover{
   background-color: #007bff;
 }
+.sub2-button:hover{
+  background-color: #007bff;
+}
+
+@media (min-width: 361px) {
+  .sub2-button{
+    margin-left: 10px;
+  }
+}
+
+@media (max-width: 359px) {
+  .sub2-button{
+    margin-top: 10px;
+    margin-left: 3px;
+  }
+}
