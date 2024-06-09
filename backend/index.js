@@ -15,7 +15,7 @@ app.post('/api', (req, res) => {
         return res.status(400).send('Text is required');
     }
 
-    const genAI = new GoogleGenerativeAI('AIzaSyABgpNb8GngSKqiTNqpQ0a7j-C23o9N99E');
+    // const genAI = new GoogleGenerativeAI('AIzaSyABgpNb8GngSKqiTNqpQ0a7j-C23o9N99E');
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     // const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
 
