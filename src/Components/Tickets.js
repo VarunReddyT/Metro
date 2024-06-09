@@ -41,7 +41,7 @@ export default function Tickets() {
         source: source,
         destination: destination,
         tickets: tickets,
-        fare: response.data.fare,
+        fare: tickets*response.data.fare,
         paymentMode : content
       });
       
