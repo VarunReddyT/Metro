@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Navbar from './Navbar';
 import Select from './Select';
 import './css/Tickets.css';
@@ -7,7 +7,7 @@ import axios from 'axios';
 import Loader from './Loader';
 import CancelTransaction from './CancelTransaction';
 import { TicketContext } from './TicketContext';
-import { useContext } from 'react';
+import { isMobile } from 'react-device-detect';
 
 export default function Tickets() {
   const [source, setSource] = useState('');
@@ -15,7 +15,6 @@ export default function Tickets() {
   const [tickets, setTickets] = useState(1);
   const [modalContent, setModalContent] = useState('');
   const [view, setView] = useState(false);
-  const [qrCode, setQrCode] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
   const [mobileNumberError, setMobileNumberError] = useState('');
   const [danger, setDanger] = useState(false);
@@ -24,7 +23,10 @@ export default function Tickets() {
   const [load, setLoad] = useState(false);
   const { setTicketDetails } = useContext(TicketContext);
   const mobileNumberPattern = /^[6-9]\d{9}$/;
-
+  const merchantUpiId = 'tvarun2014@okicici';
+  const [fare, setFare] = useState(0);
+  const [qr, setQr] = useState('');
+  console.log(transacId,setLoad)
   const openModal = async (content) => {
     if (!check(source, destination, tickets, mobileNumber)) {
       setDanger(true);
@@ -33,7 +35,7 @@ export default function Tickets() {
     setDanger(false);
     setModalContent(content);
     setView(true);
-    try{
+    try {
       const encodedSource = encodeURIComponent(source);
       const encodedDestination = encodeURIComponent(destination);
       const response = await axios.get(`https://metro-murex.vercel.app/path/${encodedSource}/${encodedDestination}`);
@@ -41,21 +43,18 @@ export default function Tickets() {
         source: source,
         destination: destination,
         tickets: tickets,
-        fare: tickets*response.data.fare,
-        paymentMode : content
+        fare: tickets * response.data.fare,
+        paymentMode: content
       });
-      
+      setFare(tickets * response.data.fare);
+
     }
     catch (error) {
       console.error('Error fetching data:', error);
     }
-    if (content === 'UPI') {
-      try {
-        const response = await axios.get('https://metro-murex.vercel.app/qrcode');
-        setQrCode(response.data.qrcode);
-      } catch (error) {
-        console.error('Error fetching QR code:', error);
-      }
+    if(content === 'UPI' && !isMobile) {
+      const response = await axios.get(`https://metro-murex.vercel.app/qrcode`);
+      setQr(response.data.qrcode);
     }
   };
 
@@ -70,22 +69,18 @@ export default function Tickets() {
     return true;
   };
 
+  const handleUPIPayment = async () => {
+    if (isMobile) {
+      const upiUrl = `upi://pay?pa=${merchantUpiId}&pn=Varun Reddy&am=${fare}&cu=INR&tn=Ticket Payment`;
+      window.location.href = upiUrl;
+    } else {
+      navigate('/bookedticket');
+    }
+  }
+
   const handleCardPayment = (event) => {
     event.preventDefault();
     navigate('/payment');
-  };
-
-  const handleUPIPayment = (event) => {
-    event.preventDefault();
-    if(transacId === ''){
-      alert('Please enter the transaction ID');
-      return;
-    }
-    setLoad(true);
-    setTimeout(() => {
-      setLoad(false); 
-      navigate('/bookedticket');
-      }, 2000);
   };
 
   const handleIncrement = () => {
@@ -112,8 +107,8 @@ export default function Tickets() {
 
   return (
     <div className="ticketsBody">
-        <Navbar />
-        <CancelTransaction/>
+      <Navbar />
+      <CancelTransaction />
       <div className="d-flex justify-content-center align-items-center">
         <div className="ticketDiv">
           <form className="formTicket">
@@ -166,13 +161,23 @@ export default function Tickets() {
                         <div>Please enter your card details to proceed with the payment.</div>
                       ) : (
                         <div>
-                          <p>Open the Google Pay app and complete the transaction.</p>
-                          <div className='d-grid' style={{placeItems:'center'}}>
-                            {!qrCode && <Loader />}
-                          </div>
-                          {qrCode && <img src={`data:image/png;base64,${qrCode}`} alt="QR Code" />}
-                          <label></label>
-                          <input type='text' placeholder='Enter Transaction Id' onChange={(e) => setTransacId(e.target.value)}required/>
+                          {modalContent === 'UPI' && !isMobile ? (
+                            <div>
+                              {qr ? (
+                                <div>
+                                  <img src={`data:image/png;base64,${qr}`} alt="QR Code" />
+                                  <label>Enter Transaction Id</label>
+                                  <input type='text' placeholder='Enter Transaction Id' onChange={(e) => setTransacId(e.target.value)} required />
+                                </div>
+                              ) : (
+                                <Loader />
+                              )}
+                            </div>
+                          ) : (
+                            <div>
+                              <p>Press the UPI button to redirect to UPI app</p>
+                            </div>
+                          )}
                         </div>
                       )}
                     </div>
@@ -181,7 +186,13 @@ export default function Tickets() {
                       {modalContent === 'Card' ? (
                         <button type="button" className="btn btn-primary submit-button" onClick={handleCardPayment}>Proceed to Payment</button>
                       ) : (
-                        load ? <Loader /> : <button type="button" className="btn btn-primary submit-button" onClick={handleUPIPayment}>Submit</button>
+                        load ? <Loader /> : (
+                          isMobile ? (
+                            <button type="button" className="btn btn-primary submit-button" onClick={handleUPIPayment}>UPI</button>
+                          ) : (
+                            <button type="button" className="btn btn-primary submit-button" onClick={handleUPIPayment}>Submit</button>
+                          )
+                        )
                       )}
                     </div>
                   </div>
@@ -193,7 +204,5 @@ export default function Tickets() {
       </div>
     </div>
   );
-
-
-
+  
 }
