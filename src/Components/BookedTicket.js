@@ -15,8 +15,10 @@ export default function BookedTicket() {
       setLoader(true);
       try {
         const response = await axios.get('https://metro-murex.vercel.app/qrcode/ticket',{
-          start : ticketDetails.source,
-          end : ticketDetails.destination
+          params: {
+            start: ticketDetails.source,
+            end: ticketDetails.destination
+          }
         });
         setQrCode(response.data.qrcode);
       } catch (error) {
