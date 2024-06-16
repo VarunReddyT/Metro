@@ -145,9 +145,10 @@ def find_path(start, end):
 
 @app.route('/qrcode/<type>')
 def generate_qr_code(type):
-    start = request.args.get('start')
-    end = request.args.get('end')
+    
     if type == 'ticket':
+        start = request.args.get('start')
+        end = request.args.get('end')
         data = "Booking Confirmed. Your journey is from {} to {}. Have a safe journey ahead.".format(start, end)
     elif type == 'gpay':
         data = "This is a GPay QR code for development purposes."
