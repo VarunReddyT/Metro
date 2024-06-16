@@ -14,7 +14,10 @@ export default function BookedTicket() {
     const fetchTicket = async () => {
       setLoader(true);
       try {
-        const response = await axios.get('https://metro-murex.vercel.app/qrcode');
+        const response = await axios.get('https://metro-murex.vercel.app/qrcode/ticket',{
+          start : ticketDetails.source,
+          end : ticketDetails.destination
+        });
         setQrCode(response.data.qrcode);
       } catch (error) {
         console.error('Error fetching QR code:', error);
@@ -24,7 +27,7 @@ export default function BookedTicket() {
     };
 
     fetchTicket();
-  }, []);
+  }, [ticketDetails.source, ticketDetails.destination]);
 
   return (
     <div className='container d-flex justify-content-center align-items-center'>

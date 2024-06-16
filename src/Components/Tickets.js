@@ -53,7 +53,7 @@ export default function Tickets() {
       console.error('Error fetching data:', error);
     }
     if(content === 'UPI' && !isMobile) {
-      const response = await axios.get(`https://metro-murex.vercel.app/qrcode`);
+      const response = await axios.get(`https://metro-murex.vercel.app/qrcode/gpay`);
       setQr(response.data.qrcode);
     }
   };
@@ -164,10 +164,15 @@ export default function Tickets() {
                           {modalContent === 'UPI' && !isMobile ? (
                             <div>
                               {qr ? (
+                                <div className='d-flex flex-column'>
                                 <div>
                                   <img src={`data:image/png;base64,${qr}`} alt="QR Code" />
+                                </div>
+                                <div>
+
                                   <label>Enter Transaction Id</label>
-                                  <input type='text' placeholder='Enter Transaction Id' onChange={(e) => setTransacId(e.target.value)} required />
+                                  <input type='text' placeholder='Enter Transaction Id' className='ms-3' onChange={(e) => setTransacId(e.target.value)} required />
+                                </div>
                                 </div>
                               ) : (
                                 <Loader />

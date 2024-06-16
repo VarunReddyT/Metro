@@ -8,10 +8,11 @@
     border-radius: 9px;
     animation: slideInFromTop 1.5s ease-in-out;
     text-align: center;
+    
 }
 
 .btn{
-
+    
     text-align: center;
     padding: 10px;
     cursor: pointer;

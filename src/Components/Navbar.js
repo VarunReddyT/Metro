@@ -9,8 +9,6 @@ export default function Navbar() {
 
                 <Link type='button' to="/tickets" className='btn'>Tickets</Link>
 
-                <Link type='button' to="/smartcard" className='btn'>Smart Card</Link>
-
             </div>
 
         </nav>

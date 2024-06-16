@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import './css/Cancel.css'
 
 export default function CancelTransaction() {
 
@@ -21,7 +22,7 @@ export default function CancelTransaction() {
   return (
     <div>
         <div className='mt-3'>
-            <button className='btn btn-danger ' onClick={handleBack}>Back</button>
+            <button className='btn btn-danger back-button' onClick={handleBack}>Back</button>
         </div>
         {openModal && <div className="modal-overlay">
                   <div className="modal-content">

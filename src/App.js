@@ -1,6 +1,5 @@
 import Fare from "./Components/HomePage";
 import Tickets from "./Components/Tickets";
-import SmartCard from "./Components/SmartCard";
 import './Components/css/Home.css';
 import { BrowserRouter as Router,Routes,Route } from "react-router-dom";
 import PaymentForm from "./Components/PaymentForm";
@@ -14,7 +13,6 @@ function App() {
       <Routes>
         <Route path='/' element={<Fare/>}/>
         <Route path='/tickets' element={<Tickets/>}/>
-        <Route path='/smartcard' element={<SmartCard/>}/>
         <Route path="/payment" element={<PaymentForm />}/>
         <Route path="/bookedticket" element={<BookedTicket />}/>
       </Routes>
