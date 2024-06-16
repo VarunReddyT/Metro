@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 from urllib.parse import unquote
 import networkx as nx
@@ -143,10 +143,12 @@ def find_path(start, end):
     else:
         return jsonify({'error': 'No path found between {} and {}'.format(start, end)})
 
-@app.route('/qrcode/<type>/<qrdata>', defaults={'qrdata': None})
-def generate_qr_code(type,qrdata):
-    if type == 'ticket' and qrdata:
-        data = "Booking Confirmed. Your journey is from {} to {}. Have a safe journey ahead.".format(qrdata['start'], qrdata['end'])
+@app.route('/qrcode/<type>')
+def generate_qr_code(type):
+    start = request.args.get('start')
+    end = request.args.get('end')
+    if type == 'ticket':
+        data = "Booking Confirmed. Your journey is from {} to {}. Have a safe journey ahead.".format(start, end)
     elif type == 'gpay':
         data = "This is a GPay QR code for development purposes."
     else:
