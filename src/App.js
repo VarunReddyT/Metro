@@ -1,4 +1,4 @@
-import Fare from "./Components/HomePage";
+import Home from "./Components/HomePage";
 import Tickets from "./Components/Tickets";
 import './Components/css/Home.css';
 import { BrowserRouter as Router,Routes,Route } from "react-router-dom";
@@ -11,7 +11,7 @@ function App() {
     <TicketProvider>
     <Router>
       <Routes>
-        <Route path='/' element={<Fare/>}/>
+        <Route path='/' element={<Home/>}/>
         <Route path='/tickets' element={<Tickets/>}/>
         <Route path="/payment" element={<PaymentForm />}/>
         <Route path="/bookedticket" element={<BookedTicket />}/>
