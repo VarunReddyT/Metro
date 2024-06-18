@@ -4,7 +4,7 @@ import Compare from './Compare.js';
 import Select from './Select.js';
 import './css/Compare.css';
 import Navbar from './Navbar.js';
-// import Loader from './Loader.js';
+import Loader from './Loader.js';
 
 export default function HomePage() {
     const [source, setSource] = useState('');
@@ -13,6 +13,7 @@ export default function HomePage() {
     const [fare, setFare] = useState('');
     const [distance, setDistance] = useState('');
     const [view, setView] = useState(true);
+    const [loader, setLoader] = useState(false);
     // const [text, setText] = useState('');
     // const [chatHistory, setChatHistory] = useState([]);
     // const [loading, setLoading] = useState(false);
@@ -21,6 +22,8 @@ export default function HomePage() {
         event.preventDefault();
         console.log('source:', source);
         console.log('destination:', destination);
+        setView(false);
+        setLoader(true);
         try {
             const encodedSource = encodeURIComponent(source);
             const encodedDestination = encodeURIComponent(destination);
@@ -29,6 +32,7 @@ export default function HomePage() {
             setFare(response.data.fare);
             setDistance(response.data.distance);
             setView(false);
+            setLoader(false);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -70,10 +74,15 @@ export default function HomePage() {
                                 <button className='btn btn-lg mt-4 check' onClick={handleSubmit}>Check</button>
                             </div>
                         </div>
-                        {view && <div>
+                        {view && !loader && <div>
                             <img className='metImg' src={require("./images/Hyd_metro.png")} alt="HydM" />
                         </div>}
-                        {!view &&
+                        {!view && loader &&
+                            <div className='homeLoader'>
+                                <Loader />
+                            </div>
+                        }
+                        {!view && !loader &&
                             <div className='d-flex justify-content-center align-items-center journey'>
                                 <div className='card'>
                                     <div className='card-body'>
