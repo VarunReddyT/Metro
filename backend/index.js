@@ -9,15 +9,16 @@ const mongoose = require('mongoose');
 const app = express();
 const port = 4000;
 
-app.use(bodyParser.json());
 app.use(cors(
     {
         origin: 'https://hyd-metro-eight.vercel.app',
         credentials: true,
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        allowedHeaders: ['Content-Type', 'Authorization'],
         allowedHeaders: ['Content-Type', 'Authorization']
     }
 ));
+app.use(bodyParser.json());
 
 mongoose.connect(process.env.MONGO_URI)
 .then(() => {
