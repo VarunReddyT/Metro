@@ -24,6 +24,19 @@ export default function BookedTicket() {
                 });
 
                 setQrCode(response.data.qrcode);
+
+                const response2 = await axios.post('https://metro-backend-eight.vercel.app/ticket', {
+                  username: currentTicketDetails.username,
+                  source: currentTicketDetails.source,
+                  destination: currentTicketDetails.destination,
+                  tickets: currentTicketDetails.tickets,
+                  fare: currentTicketDetails.fare,
+                  paymentMode: currentTicketDetails.paymentMode,
+                  transactionId: currentTicketDetails.transactionId,
+                  distance: currentTicketDetails.distance,
+                  qrCode: response.data.qrcode
+                });
+
             } catch (error) {
                 console.error('Error fetching QR code:', error);
             } finally {
