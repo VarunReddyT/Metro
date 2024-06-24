@@ -25,7 +25,7 @@ export default function BookedTicket() {
 
                 setQrCode(response.data.qrcode);
 
-                const response2 = await axios.post('https://metro-backend-eight.vercel.app/ticket', {
+                const response2 = await axios.post('https://metro-backend-eight.vercel.app/api/tickets/bookedticket', {
                   username: currentTicketDetails.username,
                   source: currentTicketDetails.source,
                   destination: currentTicketDetails.destination,
