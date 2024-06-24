@@ -95,10 +95,8 @@ export default function Tickets() {
         fare: tickets * response.data.fare,
         paymentMode: paymentType,
         transactionId: transactionId,
-        distance: response.data.distance,
-        // qrCode: 
+        distance: response.data.distance
       });
-      // localStorage.setItem('ticketDetails', JSON.stringify())
       setFare(tickets * response.data.fare);
 
     }

@@ -35,27 +35,6 @@ export default function BookedTicket() {
     }, [ticketDetails]);
 
     return (
-        // <div>
-            
-        //     <div className="booked-ticket-container">
-        //         {loader ? (
-        //             <Loader />
-        //         ) : (
-        //             <div className="ticket">
-        //                 <h2>Booked Ticket</h2>
-        //                 <p>Username: {ticketDetails.username}</p>
-        //                 <p>Source: {ticketDetails.source}</p>
-        //                 <p>Destination: {ticketDetails.destination}</p>
-        //                 <p>Number of Tickets: {ticketDetails.tickets}</p>
-        //                 <p>Fare: {ticketDetails.fare}</p>
-        //                 <p>Distance: {ticketDetails.distance} km</p>
-        //                 <p>Transaction ID: {ticketDetails.transactionId}</p>
-        //                 <p>Payment Mode: {ticketDetails.paymentMode}</p>
-        //                 {qrCode && <img src={qrCode} alt="Ticket QR Code" />}
-        //             </div>
-        //         )}
-        //     </div>
-        // </div>
         <div>
           <Navbar />
         
