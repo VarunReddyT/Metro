@@ -1,40 +1,35 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');  
 const cors = require('cors');
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+const userRoutes = require('./Routes/User.js'); 
+const ticketRoutes = require('./Routes/Ticket.js');
+const mongoose = require('mongoose');
 
 const app = express();
 const port = 4000;
 
 app.use(bodyParser.json());
-app.use(cors());
-
-app.post('/api', (req, res) => {
-    const { text } = req.body;
-    if (!text) {
-        return res.status(400).send('Text is required');
+app.use(cors(
+    {
+        origin: 'http://localhost:3000',
+        credentials: true,
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        allowedHeaders: ['Content-Type', 'Authorization']
     }
+));
 
-    // const genAI = new GoogleGenerativeAI('AIzaSyABgpNb8GngSKqiTNqpQ0a7j-C23o9N99E');
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-    // const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
+mongoose.connect(process.env.MONGO_URI)
+.then(() => {
+    console.log('Connected to MongoDB');
+}).catch((err) => {
+    console.log('Error connecting to MongoDB', err);
+}
+);
 
-    async function run() {
-        const prompt = `${text} + according to Hyderabad Metro Rail.`;
+app.use('/api/users', userRoutes); 
+app.use('/api/tickets', ticketRoutes);
 
-        try {
-            const result = await model.generateContent(prompt);
-            const response = await result.response;
-            const generatedText = await response.text();
-            res.send(generatedText);
-        } catch (error) {
-            console.error('Error generating content:', error);
-            res.status(500).send('Error generating content');
-        }
-    }
-
-    run();
-});
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);

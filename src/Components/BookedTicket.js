@@ -1,55 +1,86 @@
-import React, { useEffect } from 'react'
-import Loader2 from './Loader2'
-import { useState, useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import Navbar from './Navbar';
+import { TicketContext } from './TicketContext';
+import Loader2 from './Loader2';
 import axios from 'axios';
-import { TicketContext } from './TicketContext.js';
 
 export default function BookedTicket() {
+    const [qrCode, setQrCode] = useState('');
+    const [loader, setLoader] = useState(false);
+    const { ticketDetails } = useContext(TicketContext);
 
-  const [loader, setLoader] = useState(false);
-  const [qrCode, setQrCode] = useState('');
-  const { ticketDetails } = useContext(TicketContext);
+    useEffect(() => {
+        const fetchTicket = async () => {
+            setLoader(true);
+            try {
+                const savedTicketDetails = localStorage.getItem('ticketDetails');
+                const currentTicketDetails = savedTicketDetails ? JSON.parse(savedTicketDetails) : ticketDetails;
 
-  useEffect(() => {
-    const fetchTicket = async () => {
-      setLoader(true);
-      try {
-        const response = await axios.get('https://metro-murex.vercel.app/qrcode/ticket',{
-          params: {
-            start: ticketDetails.source,
-            end: ticketDetails.destination
-          }
-        });
-        setQrCode(response.data.qrcode);
-      } catch (error) {
-        console.error('Error fetching QR code:', error);
-      } finally {
-        setLoader(false);
-      }
-    };
+                const response = await axios.get('https://metro-murex.vercel.app/qrcode/ticket',{
+                  params: {
+                    start: ticketDetails.source,
+                    end: ticketDetails.destination
+                  }
+                });
 
-    fetchTicket();
-  }, [ticketDetails.source, ticketDetails.destination]);
+                setQrCode(response.data.qrcode);
+            } catch (error) {
+                console.error('Error fetching QR code:', error);
+            } finally {
+                setLoader(false);
+            }
+        };
 
-  return (
-    <div className='container d-flex justify-content-center align-items-center'>
-      <div className='row'>
-        <div className="card">
-          <div className="card-body">
-            <h5 className="card-title">Booking Confirmed</h5>
-            <h6 className="card-subtitle mb-2 text-body-secondary">Scan the below QR at the metro station</h6>
-            {loader ? <Loader2 /> : <img src={`data:image/png;base64,${qrCode}`} alt="QR Code" />}
-            <div>
-              <p className="card-text">Source: {ticketDetails.source}</p>
-              <p className="card-text">Destination: {ticketDetails.destination}</p>
-              <p className="card-text">Tickets: {ticketDetails.tickets}</p>
-              <p className="card-text">Fare: {ticketDetails.fare}</p>
-              <p className="card-text">Payment Mode: {ticketDetails.paymentMode}</p>
+        fetchTicket();
+    }, [ticketDetails]);
+
+    return (
+        // <div>
+            
+        //     <div className="booked-ticket-container">
+        //         {loader ? (
+        //             <Loader />
+        //         ) : (
+        //             <div className="ticket">
+        //                 <h2>Booked Ticket</h2>
+        //                 <p>Username: {ticketDetails.username}</p>
+        //                 <p>Source: {ticketDetails.source}</p>
+        //                 <p>Destination: {ticketDetails.destination}</p>
+        //                 <p>Number of Tickets: {ticketDetails.tickets}</p>
+        //                 <p>Fare: {ticketDetails.fare}</p>
+        //                 <p>Distance: {ticketDetails.distance} km</p>
+        //                 <p>Transaction ID: {ticketDetails.transactionId}</p>
+        //                 <p>Payment Mode: {ticketDetails.paymentMode}</p>
+        //                 {qrCode && <img src={qrCode} alt="Ticket QR Code" />}
+        //             </div>
+        //         )}
+        //     </div>
+        // </div>
+        <div>
+          <Navbar />
+        
+        <div className='container d-flex justify-content-center align-items-center'>
+        <div className='row'>
+          <div className="card">
+            <div className="card-body">
+              <h5 className="card-title">Booking Confirmed</h5>
+              <h6 className="card-subtitle mb-2 text-body-secondary">Scan the below QR at the metro station</h6>
+              {loader ? <Loader2 /> : <img src={`data:image/png;base64,${qrCode}`} alt="QR Code" />}
+              <div>
+                {/* <p className="card-text">Username: {ticketDetails.username}</p> */}
+                 <p className="card-text">Source: {ticketDetails.source}</p>
+                <p className="card-text">Destination: {ticketDetails.destination}</p>
+                 <p className="card-text">Number of Tickets: {ticketDetails.tickets}</p>
+                 <p className="card-text">Fare: {ticketDetails.fare}</p>
+                 <p className="card-text">Distance: {ticketDetails.distance} km</p>
+                 <p className="card-text">Transaction ID: {ticketDetails.transactionId}</p>
+                 <p className="card-text">Payment Mode: {ticketDetails.paymentMode}</p>
+              </div>
+  
             </div>
-
           </div>
         </div>
       </div>
-    </div>
-  )
+      </div>
+    );
 }

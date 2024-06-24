@@ -9,7 +9,6 @@
  
     }
     .det{
-        
         height: 90vh;
     }
     .metImg {
@@ -41,10 +40,11 @@
 }
 
 .det{
-    background-image: url('../images/metroView.jpg');
+    background-image: url('../images/metroView.jpg');;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+
 }
 
 .select-container {
@@ -89,6 +89,9 @@
     box-shadow: 3px 4px 0px 1px #E99F4C;
 }
 .check:hover {
+    background-color: #0099ff;
+}
+.check:active {
     background-color: #0099ff;
 }
 

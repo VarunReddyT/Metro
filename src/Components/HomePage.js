@@ -68,7 +68,7 @@ export default function HomePage() {
                     <Navbar />
                     <div className='d-flex justify-content-center details '>
                         <div>
-                            <h3 className='text-center mt-5 trip '>Find Trip Details</h3>
+                            <h3 className='text-center mt-5 trip'>Find Trip Details</h3>
                             <Select setDestination={setDestination} setSource={setSource} transition={true} />
                             <div className='d-flex justify-content-center align-items-center'>
                                 <button className='btn btn-lg mt-4 check' onClick={handleSubmit}>Check</button>
