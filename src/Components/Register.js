@@ -35,7 +35,7 @@ export default function Register() {
         e.preventDefault();
         try {
             const response = await axios.post(
-                'http://metro-backend-eight.vercel.app/api/users/register',
+                'https://metro-backend-eight.vercel.app/api/users/register',
                 { name, username, password, gmail, mobilenumber },
                 {
                     headers: {

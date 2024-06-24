@@ -18,7 +18,7 @@ export default function Navbar() {
             try {
                 try{
                     const response = await axios.post(
-                        'http://metro-backend-eight.vercel.app/api/users/check', { token },
+                        'https://metro-backend-eight.vercel.app/api/users/check', { token },
                         {
                             headers: {
                                 'Authorization': `Bearer ${token}`,
