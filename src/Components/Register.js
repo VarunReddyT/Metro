@@ -40,8 +40,8 @@ export default function Register() {
                 {
                     headers: {
                         'Content-Type': 'application/json',
-                    }
-                    // withCredentials: true,
+                    },
+                    withCredentials: true,
                 }
             );
             console.log(response.data);
