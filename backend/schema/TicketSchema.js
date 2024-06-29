@@ -39,7 +39,11 @@ const TicketSchema = new Schema({
         required: true
     },
     qrCode : {
-        type : Buffer,
+        type : String,
+        required : true
+    },
+    journeyDate:{
+        type : Date,
         required : true
     }
 });

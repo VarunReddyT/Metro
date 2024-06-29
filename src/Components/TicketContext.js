@@ -12,7 +12,8 @@ export const TicketProvider = ({ children }) => {
     paymentMode: '',
     tickets: 0,
     transactionId: '',
-    qrCode: ''
+    qrCode: '',
+    journeyDate : ''
   });
 
   useEffect(() => {

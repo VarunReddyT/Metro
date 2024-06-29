@@ -35,6 +35,7 @@ export default function Register() {
         e.preventDefault();
         try {
             const response = await axios.post(
+                // 'https://metro-backend-eight.vercel.app/api/users/register',
                 'https://metro-backend-eight.vercel.app/api/users/register',
                 { name, username, password, gmail, mobilenumber },
                 {
@@ -57,6 +58,9 @@ export default function Register() {
 
     return (
         <div className="register-container">
+             <div className='mb-3'>
+                <img src={require('./images/hmrlogo.png')} width='150' height='150'></img>
+            </div>
             <h1>Register</h1>
             <form className="register-form" onSubmit={handleSubmit}>
                 <label>Name</label>

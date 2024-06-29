@@ -65,7 +65,7 @@ export default function HomePage() {
         <>
             <div className="mainC">
                 <div className='det'>
-                    <Navbar />
+                    {/* <Navbar /> */}
                     <div className='d-flex justify-content-center details '>
                         <div>
                             <h3 className='text-center mt-5 trip'>Find Trip Details</h3>
@@ -84,9 +84,9 @@ export default function HomePage() {
                         }
                         {!view && !loader &&
                             <div className='d-flex justify-content-center align-items-center journey'>
-                                <div className='card'>
+                                <div className='card journey-card'>
                                     <div className='card-body'>
-                                        <h5 className='card-title'>Journey Details</h5>
+                                        <h5 className='card-title text-center' style={{ color: '#264143', fontWeight: 900}}>Journey Details</h5>
                                         <p className='card-text'>Path: {path}</p>
                                         <p className='card-text'>Distance: {distance} km</p>
                                         <p className='card-text'>Fare: ₹ {fare}</p>

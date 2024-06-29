@@ -1,12 +1,17 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Navbar from './Navbar';
 import Select from './Select';
 import './css/Tickets.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Loader from './Loader';
-import CancelTransaction from './CancelTransaction';
+// import CancelTransaction from './CancelTransaction';
 import { TicketContext } from './TicketContext';
+import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from 'dayjs';
 
 export default function Tickets() {
   const [source, setSource] = useState('');
@@ -14,14 +19,13 @@ export default function Tickets() {
   const [tickets, setTickets] = useState(1);
   const [modalContent, setModalContent] = useState('');
   const [view, setView] = useState(false);
-  const [mobileNumber, setMobileNumber] = useState('');
-  const [mobileNumberError, setMobileNumberError] = useState('');
   const [danger, setDanger] = useState(false);
   const navigate = useNavigate();
+  const [date, setDate] = useState(dayjs().toDate());
 
 
-  const { ticketDetails,setTicketDetails } = useContext(TicketContext);
-  const mobileNumberPattern = /^[6-9]\d{9}$/;
+  const { ticketDetails, setTicketDetails } = useContext(TicketContext);
+  // const mobileNumberPattern = /^[6-9]\d{9}$/;
 
   const [fare, setFare] = useState(0);
   const [qr, setQr] = useState('');
@@ -29,15 +33,15 @@ export default function Tickets() {
 
 
   const generateTransactionId = (paymentMode) => {
-    
+
     const timestamp = new Date().toISOString().replace(/^20/, '').replace(/[:-]/g, '').replace(/\.\d{3}Z$/, 'Z');
     const randomComponent = Math.random().toString(36).substring(2, 6).toUpperCase();
     const result = `${paymentMode.substring(0, 3).toUpperCase()}${timestamp}${randomComponent}`;
     return result;
- 
-   };
-   
-   const checkLogin = async(content) => {
+
+  };
+
+  const checkLogin = async (content) => {
     const token = localStorage.getItem('token');
     if (!token) {
       alert('You are not logged in. Please log in to continue.');
@@ -47,6 +51,7 @@ export default function Tickets() {
 
     try {
       const response = await axios.post(
+        // 'https://metro-backend-eight.vercel.app/api/users/check',
         'https://metro-backend-eight.vercel.app/api/users/check',
         { token },
         {
@@ -63,18 +68,18 @@ export default function Tickets() {
       navigate('/login');
     }
 
-    if(content === 'Card'){
+    if (content === 'Card') {
       openModal('Card');
     }
-    else{
+    else {
       openModal('UPI');
     }
-    
-   }
+
+  }
 
 
   const openModal = async (content) => {
-    if (!check(source, destination, tickets, mobileNumber)) {
+    if (!check(source, destination, tickets)) {
       setDanger(true);
       return;
     }
@@ -95,7 +100,8 @@ export default function Tickets() {
         fare: tickets * response.data.fare,
         paymentMode: paymentType,
         transactionId: transactionId,
-        distance: response.data.distance
+        distance: response.data.distance,
+        journeyDate : date
       });
       setFare(tickets * response.data.fare);
 
@@ -114,7 +120,7 @@ export default function Tickets() {
   };
 
   const check = (source, destination, tickets, mobileNumber) => {
-    if (source === '' || destination === '' || tickets === 0 || mobileNumber === '' || mobileNumberError) {
+    if (source === '' || destination === '' || tickets === 0) {
       return false;
     }
     return true;
@@ -141,19 +147,10 @@ export default function Tickets() {
     }
   };
 
-  const handleMobileNumberChange = (e) => {
-    const value = e.target.value;
-    if (mobileNumberPattern.test(value)) {
-      setMobileNumberError('');
-    } else {
-      setMobileNumberError('Invalid mobile number');
-    }
-    setMobileNumber(value);
-  };
 
   return (
     <div>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="ticketsBody">
 
         <div className="alert alert-danger" role="alert">
@@ -176,22 +173,24 @@ export default function Tickets() {
                   <input type="button" value="+" onClick={handleIncrement} />
                 </div>
               </div>
-              <div className="mt-4">
-                <input
-                  type="number"
-                  id="mobileNumber"
-                  placeholder='Mobile Number'
-                  value={mobileNumber}
-                  onChange={handleMobileNumberChange}
-                  className="form-control"
-                />
-                {mobileNumberError && (
-                  <div className="alert alert-danger mt-2" role="alert">
-                    {mobileNumberError}
-                  </div>
-                )}
+              <div>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DemoContainer
+                    components={[
+                      'DatePicker'
+                    ]}
+                  >
+                    <div className='d-flex text-center mt-3'>
+                    <DemoItem>
+                      <label>Pick Journey Date</label>
+                      <DatePicker format='DD/MM/YYYY' onChange={(newDate) => setDate(newDate)} defaultValue={dayjs(new Date())} />
+                    </DemoItem>
+                    </div>
+                  </DemoContainer>
+                </LocalizationProvider>
               </div>
-              <div className="mt-4">
+
+              <div className="mt-4 payButtons">
                 <button type="button" className="btn btn-primary sub-button" onClick={() => checkLogin('Card')}>
                   Pay with Card
                 </button>
@@ -240,8 +239,8 @@ export default function Tickets() {
                         {modalContent === 'Card' ? (
                           <button type="button" className="btn btn-primary submit-button" onClick={handleCardPayment}>Proceed to Payment</button>
                         ) : ((
-                            <button type="button" className="btn btn-primary submit-button" onClick={handleUPIPayment}>Proceed</button>
-                          )
+                          <button type="button" className="btn btn-primary submit-button" onClick={handleUPIPayment}>Proceed</button>
+                        )
                         )}
                       </div>
                     </div>
@@ -255,7 +254,7 @@ export default function Tickets() {
         </div>
       </div>
       <div className='justify-content-center d-flex'>
-        <CancelTransaction />
+        {/* <CancelTransaction /> */}
       </div>
     </div>
   );

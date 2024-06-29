@@ -99,8 +99,6 @@ body {
 }
 
 
-/* Tickets.css */
-
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -163,15 +161,19 @@ body {
   background-color: #007bff;
 }
 
-@media (min-width: 361px) {
+@media (min-width: 370px) {
   .sub2-button{
     margin-left: 10px;
   }
 }
 
-@media (max-width: 359px) {
+@media (max-width: 375px) {
   .sub2-button{
     margin-top: 10px;
     margin-left: 3px;
+  }
+  .payButtons{
+    display: grid;
+    justify-content: center;
   }
 }

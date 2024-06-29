@@ -4,9 +4,9 @@ const ticketschema = require('../schema/TicketSchema.js');
 // const jwt = require('jsonwebtoken');
 
 router.post('/bookedticket', async (req, res) => {
-    const {username,source, destination, tickets, fare, distance, transactionId, paymentMode, qrCode } = req.body;
+    const {username,source, destination, tickets, fare, distance, transactionId, paymentMode, qrCode, journeyDate } = req.body;
     console.log(req.body);
-    if (!username || !source || !destination || !tickets || !fare || !distance || !transactionId || !qrCode || !paymentMode) {
+    if (!username || !source || !destination || !tickets || !fare || !distance || !transactionId || !qrCode || !paymentMode || !journeyDate) {
         return res.status(400).send('Please fill all the fields');
     }
 
@@ -19,7 +19,8 @@ router.post('/bookedticket', async (req, res) => {
         distance : distance, 
         transactionId : transactionId, 
         paymentMode: paymentMode,
-        qrCode : qrCode
+        qrCode : qrCode,
+        journeyDate : journeyDate
     });
     try{
         await ticket.save();

@@ -2,10 +2,12 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 export default function Navbar() {
 
     const [user, setUser] = useState();
     const [login, setLogin] = useState(false);
+    const location = useLocation();
 
     useEffect(() => {
         const checkLoginStatus = async () => {
@@ -18,6 +20,7 @@ export default function Navbar() {
             try {
                 try{
                     const response = await axios.post(
+                        // 'https://metro-backend-eight.vercel.app/api/users/check', { token },
                         'https://metro-backend-eight.vercel.app/api/users/check', { token },
                         {
                             headers: {
@@ -42,7 +45,7 @@ export default function Navbar() {
         };
 
         checkLoginStatus();
-    }, []);
+    }, [location]);
 
     return (
         <nav className="navbar navbar-expand-lg bg-body-secondary">

@@ -25,7 +25,8 @@ export default function Login() {
         setError('');
         try {
             const response = await axios.post(
-                'https://metro-backend-eight.vercel.app/api/users/login', 
+                // 'https://metro-backend-eight.vercel.app/api/users/login', 
+                'https://metro-backend-eight.vercel.app/api/users/login',
                 { username, password },
                 {
                     headers: {
@@ -44,7 +45,8 @@ export default function Login() {
                 paymentMode: '',
                 tickets: 0,
                 transactionId: '',
-                qrCode: ''
+                qrCode: '',
+                journeyDate: ''
             });
 
             navigate("/");
@@ -54,8 +56,10 @@ export default function Login() {
     };
 
     return (
-        <div className="login-container">
-            <h1>Login</h1>
+        <div className="container out">
+            <div className='mb-3'>
+                <img src={require('./images/hmrlogo.png')} width='150' height='150'></img>
+            </div>
             <form className="login-form">
                 <label>Username</label>
                 <input type="text" placeholder="Username" onChange={handleUsername} />

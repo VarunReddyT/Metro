@@ -10,12 +10,14 @@ import Login from "./Components/Login";
 import Register from "./Components/Register";
 import Google from "./Components/Google";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import Navbar from "./Components/Navbar";
 
 function App() {
   return (
     <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_ID}>
     <TicketProvider>
     <Router>
+      <Navbar/>
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/tickets' element={<Tickets/>}/>

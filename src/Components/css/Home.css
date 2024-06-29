@@ -40,7 +40,7 @@
 }
 
 .det{
-    background-image: url('../images/metroView.jpg');;
+    background-image: url('../images/metroView2.jpg');;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -145,4 +145,12 @@
 
 }
 
+
+.journey-card {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 20px;
+
+}
 
