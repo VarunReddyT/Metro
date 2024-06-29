@@ -179,6 +179,7 @@ export default function Account() {
               <img
                 src={`data:image/png;base64,${selectedQRCode}`}
                 alt="QR Code"
+                className='img-fluid'
                 style={isQRCodeExpired ? { filter: 'blur(8px)' } : {}}
               />
             </div>
