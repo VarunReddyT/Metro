@@ -24,10 +24,13 @@ export default function Account() {
             username: ticketDetails.username
           }
         });
-        setUserDetails(response.data);
-      } catch (error) {
+        if(response.data === null) {
           alert('You are not logged in. Please log in to continue.');
           window.location.href = '/login';
+        }
+        setUserDetails(response.data);
+      } catch (error) {
+          console.log(error);
       }
     };
 
