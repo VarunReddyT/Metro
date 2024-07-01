@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import './css/Account.css';
 import axios from 'axios';
 import { TicketContext } from './TicketContext';
+import Loader2 from './Loader2';
 
 export default function Account() {
   const [activeButton, setActiveButton] = useState('Profile');
@@ -107,10 +108,12 @@ export default function Account() {
             <div className="profile-info">
               {activeButton === 'Profile' && (
                 <>
+                {userDetails ? <div>
                   <p><strong>Name : </strong>{userDetails.name}</p>
                   <p><strong>Username : </strong>{userDetails.username}</p>
                   <p><strong>Phone : </strong>+91{userDetails.mobilenumber}</p>
                   <p><strong>Email : </strong>{userDetails.gmail}</p>
+                  </div> : <Loader2 />}
                 </>
               )}
               {activeButton === 'Bookings' && (
