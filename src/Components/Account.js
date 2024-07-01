@@ -12,6 +12,7 @@ export default function Account() {
   const [modal, setModal] = useState(false);
   const [selectedQRCode, setSelectedQRCode] = useState('');
   const [isQRCodeExpired, setIsQRCodeExpired] = useState(false);
+  const [userLoad, setUserLoad] = useState(true);
 
   const handleClick = (buttonName) => {
     setActiveButton(buttonName);
@@ -20,18 +21,20 @@ export default function Account() {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
+        setUserLoad(true);
         const response = await axios.get('https://metro-backend-eight.vercel.app/api/users/getuser', {
           params: {
             username: ticketDetails.username
           }
         });
-        if(response.data === null) {
+        if (response.data === null) {
           alert('You are not logged in. Please log in to continue.');
           window.location.href = '/login';
         }
         setUserDetails(response.data);
+        setUserLoad(false);
       } catch (error) {
-          console.log(error);
+        console.log(error);
       }
     };
 
@@ -108,12 +111,12 @@ export default function Account() {
             <div className="profile-info">
               {activeButton === 'Profile' && (
                 <>
-                {userDetails ? <div>
-                  <p><strong>Name : </strong>{userDetails.name}</p>
-                  <p><strong>Username : </strong>{userDetails.username}</p>
-                  <p><strong>Phone : </strong>+91{userDetails.mobilenumber}</p>
-                  <p><strong>Email : </strong>{userDetails.gmail}</p>
-                  </div> : <Loader2 />}
+                  {userLoad ? <Loader2 /> : <div>
+                    <p><strong>Name : </strong>{userDetails.name}</p>
+                    <p><strong>Username : </strong>{userDetails.username}</p>
+                    <p><strong>Phone : </strong>+91{userDetails.mobilenumber}</p>
+                    <p><strong>Email : </strong>{userDetails.gmail}</p>
+                  </div>}
                 </>
               )}
               {activeButton === 'Bookings' && (
