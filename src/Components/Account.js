@@ -13,6 +13,7 @@ export default function Account() {
   const [selectedQRCode, setSelectedQRCode] = useState('');
   const [isQRCodeExpired, setIsQRCodeExpired] = useState(false);
   const [userLoad, setUserLoad] = useState(true);
+  const [bookingLoad, setBookingLoad] = useState(true);
 
   const handleClick = (buttonName) => {
     setActiveButton(buttonName);
@@ -45,13 +46,14 @@ export default function Account() {
     if (activeButton === 'Bookings') {
       const fetchBookings = async () => {
         try {
+          setBookingLoad(true);
           const response = await axios.get('https://metro-backend-eight.vercel.app/api/tickets/getticket', {
             params: {
               username: ticketDetails.username
             }
           });
-          console.log(response.data);
           setBookings(response.data);
+          setBookingLoad(false);
         } catch (error) {
           console.log(error);
         }
@@ -121,7 +123,7 @@ export default function Account() {
               )}
               {activeButton === 'Bookings' && (
                 <>
-                  {bookings.length > 0 ? (
+                  {bookingLoad ? <Loader2 /> : bookings.length > 0 ? (
                     <div className="table-responsive">
                       <table className="table table-striped">
                         <thead>
