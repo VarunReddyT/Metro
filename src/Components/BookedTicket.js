@@ -11,14 +11,11 @@ export default function BookedTicket() {
   const isInitialMount = useRef(true);
 
   useEffect(() => {
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-      return;
-  }
     const fetchTicket = async () => {
+      if (!ticketDetails) return;
+
       setLoader(true);
       try {
-
         const response = await axios.get('https://metro-murex.vercel.app/qrcode/ticket', {
           params: {
             start: ticketDetails.source,
@@ -46,10 +43,7 @@ export default function BookedTicket() {
           localStorage.setItem('ticketDetails', JSON.stringify(currentTicketDetails));
         }
 
-
-        // const response2 = await axios.post('https://metro-backend-eight.vercel.app/api/tickets/bookedticket', {
         await axios.post('https://metro-backend-eight.vercel.app/api/tickets/bookedticket', currentTicketDetails);
-
 
       } catch (error) {
         console.error('Error fetching QR code:', error);
@@ -58,8 +52,11 @@ export default function BookedTicket() {
       }
     };
 
-    fetchTicket();
-  }, []);
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      fetchTicket();
+    }
+  }, [ticketDetails]);
 
   return (
     <div>
@@ -75,10 +72,8 @@ export default function BookedTicket() {
           <div className="card">
             <div className="card-body">
               <h5 className="card-title">Booking Confirmed</h5>
-              {/* <h6 className="card-subtitle mb-2 text-body-secondary">Scan the below QR at the metro station</h6> */}
               {loader ? <Loader2 /> : <img src={`data:image/png;base64,${qrCode}`} alt="QR Code" />}
               <div>
-                {/* <p className="card-text">Username: {ticketDetails.username}</p> */}
                 <p className="card-text">Source: {ticketDetails.source}</p>
                 <p className="card-text">Destination: {ticketDetails.destination}</p>
                 <p className="card-text">Number of Tickets: {ticketDetails.tickets}</p>
@@ -87,7 +82,6 @@ export default function BookedTicket() {
                 <p className="card-text">Transaction ID: {ticketDetails.transactionId}</p>
                 <p className="card-text">Payment Mode: {ticketDetails.paymentMode}</p>
               </div>
-
             </div>
           </div>
         </div>
