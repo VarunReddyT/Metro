@@ -3,6 +3,7 @@ import './css/Account.css';
 import axios from 'axios';
 import { TicketContext } from './TicketContext';
 import Loader2 from './Loader2';
+import useNavigate from 'react-router-dom';
 
 export default function Account() {
   const [activeButton, setActiveButton] = useState('Profile');
@@ -14,6 +15,8 @@ export default function Account() {
   const [isQRCodeExpired, setIsQRCodeExpired] = useState(false);
   const [userLoad, setUserLoad] = useState(true);
   const [bookingLoad, setBookingLoad] = useState(true);
+
+  const navigate = useNavigate();
 
   const handleClick = (buttonName) => {
     setActiveButton(buttonName);
@@ -87,7 +90,7 @@ export default function Account() {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('ticketDetails');
-    window.location.reload();
+    navigate('/');
   }
   return (
     <div className="account-container">
