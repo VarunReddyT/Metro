@@ -3,7 +3,7 @@ import './css/Account.css';
 import axios from 'axios';
 import { TicketContext } from './TicketContext';
 import Loader2 from './Loader2';
-import useNavigate from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function Account() {
   const [activeButton, setActiveButton] = useState('Profile');
