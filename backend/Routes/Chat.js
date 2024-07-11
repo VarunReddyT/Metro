@@ -18,7 +18,10 @@ router.post('/response', (req, res) => {
         try {
             const result = await model.generateContent(prompt);
             const response = await result.response;
-            const generatedText = await response.text();
+            let generatedText = await response.text();
+            
+            generatedText = generatedText.replace(/\*/g, '');
+
             res.send(generatedText);
         } catch (error) {
             console.error('Error generating content:', error);
@@ -27,7 +30,6 @@ router.post('/response', (req, res) => {
     }
 
     run();
-}
-);
+});
 
 module.exports = router;

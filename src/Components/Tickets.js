@@ -51,7 +51,6 @@ export default function Tickets() {
 
     try {
       const response = await axios.post(
-        // 'https://metro-backend-eight.vercel.app/api/users/check',
         'https://metro-backend-eight.vercel.app/api/users/check',
         { token },
         {
