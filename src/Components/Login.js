@@ -69,8 +69,8 @@ export default function Login() {
                 <input type="password" placeholder="Password" onChange={handlePassword} />
                 {error && <p className="error-message">{error}</p>}
                 <button type='submit' onClick={handleSubmit}>Login</button>
-                {loader && <Loader />}
             </form>
+                {loader && <Loader />}
             <div className="login-footer">
                 <span>Don't have an account?</span>
                 <Link to="/register">Sign Up</Link>
