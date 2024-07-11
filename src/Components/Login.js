@@ -3,12 +3,14 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import './css/Login.css';
 import { TicketContext } from './TicketContext.js';
+import Loader from './Loader.js';
 
 export default function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const { setTicketDetails } = useContext(TicketContext);
+    const [loader, setLoader] = useState(false);
     const navigate = useNavigate();
 
     const handleUsername = (e) => {
@@ -21,7 +23,7 @@ export default function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        setLoader(true);
         setError('');
         try {
             const response = await axios.post(
@@ -35,6 +37,7 @@ export default function Login() {
                 }
             );
             localStorage.setItem('token', response.data.token);
+            setLoader(false);
             setTicketDetails({
                 username : username,
                 source: '',
@@ -66,6 +69,7 @@ export default function Login() {
                 <input type="password" placeholder="Password" onChange={handlePassword} />
                 {error && <p className="error-message">{error}</p>}
                 <button type='submit' onClick={handleSubmit}>Login</button>
+                {loader && <Loader />}
             </form>
             <div className="login-footer">
                 <span>Don't have an account?</span>
