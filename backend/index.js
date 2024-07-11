@@ -4,19 +4,13 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const userRoutes = require('./Routes/User.js'); 
 const ticketRoutes = require('./Routes/Ticket.js');
+const chatRoutes = require('./Routes/Chat.js');
 const mongoose = require('mongoose');
 
 const app = express();
 const port = 4000;
 
-app.use(cors(
-    {
-        origin: 'https://hydmetro.vercel.app',
-        credentials: true,
-        methods: ['GET', 'POST', 'PUT', 'DELETE'],
-        allowedHeaders: ['Content-Type', 'Authorization']
-    }
-));
+app.use(cors());
 app.use(bodyParser.json());
 
 mongoose.connect(process.env.MONGO_URI)
@@ -34,6 +28,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/users', userRoutes); 
 app.use('/api/tickets', ticketRoutes);
+app.use('/api/chat',chatRoutes);
 
 
 app.listen(port, () => {
