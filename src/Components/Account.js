@@ -27,6 +27,7 @@ export default function Account() {
       try {
         setUserLoad(true);
         const response = await axios.get('https://metro-backend-eight.vercel.app/api/users/getuser', {
+        // const response = await axios.get('http://localhost:4000/api/users/getuser', {
           params: {
             username: ticketDetails.username
           }
@@ -51,6 +52,7 @@ export default function Account() {
         try {
           setBookingLoad(true);
           const response = await axios.get('https://metro-backend-eight.vercel.app/api/tickets/getticket', {
+          // const response = await axios.get('http://localhost:4000/api/tickets/getticket', {
             params: {
               username: ticketDetails.username
             }

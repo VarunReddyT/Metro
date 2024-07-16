@@ -20,6 +20,7 @@ router.post('/register', async (req, res) => {
         res.status(200).send('User registered successfully');
     }
     catch(err){
+        console.log(err);
         res.status(500).send('Error registering user. Please try again.');
     }
     

@@ -44,6 +44,7 @@ export default function BookedTicket() {
         }
 
         await axios.post('https://metro-backend-eight.vercel.app/api/tickets/bookedticket', currentTicketDetails);
+        // await axios.post('http://localhost:4000/api/tickets/bookedticket', currentTicketDetails);
 
       } catch (error) {
         console.error('Error fetching QR code:', error);

@@ -28,13 +28,8 @@ export default function Login() {
         try {
             const response = await axios.post(
                 'https://metro-backend-eight.vercel.app/api/users/login',
-                { username, password },
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    withCredentials: true,
-                }
+                // "http://localhost:4000/api/users/login",
+                { username, password }
             );
             localStorage.setItem('token', response.data.token);
             setLoader(false);

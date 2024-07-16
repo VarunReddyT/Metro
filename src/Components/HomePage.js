@@ -58,6 +58,7 @@ export default function HomePage() {
         try {
             // const response = await axios.post('http://localhost:4000/api/chat/response', { text });
             const response = await axios.post('https://metro-backend-eight.vercel.app/api/chat/response', { text });
+
             const botMessage = { sender: 'bot', text: response.data };
             setLoading(false);
             setChatHistory([...chatHistory, userMessage, botMessage]);
