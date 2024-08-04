@@ -8,7 +8,7 @@ import { TicketProvider } from "./Components/TicketContext";
 import Account from "./Components/Account";
 import Login from "./Components/Login";
 import Register from "./Components/Register";
-import Google from "./Components/Google";
+// import Google from "./Components/Google";
 // import { GoogleOAuthProvider } from "@react-oauth/google";
 import Navbar from "./Components/Navbar";
 // import PaymentFormDisplay from "./Components/PaymentFormDisplay";
@@ -28,7 +28,7 @@ function App() {
         <Route path="/account" element={<Account />}/>
         <Route path="/login" element={<Login />}/>
         <Route path="/register" element={<Register />}/>
-        <Route path="/google" element={<Google/>}/>
+        {/* <Route path="/google" element={<Google/>}/> */}
       </Routes>
     </Router>
     </TicketProvider>
