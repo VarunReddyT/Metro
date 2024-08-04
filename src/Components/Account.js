@@ -15,6 +15,7 @@ export default function Account() {
   const [isQRCodeExpired, setIsQRCodeExpired] = useState(false);
   const [userLoad, setUserLoad] = useState(true);
   const [bookingLoad, setBookingLoad] = useState(true);
+  const [text, setText] = useState('');
 
   const navigate = useNavigate();
 
@@ -80,8 +81,10 @@ export default function Account() {
 
     if (today > journeyDateObj) {
       setIsQRCodeExpired(true);
+      setText('QR Code expired');
     } else {
       setIsQRCodeExpired(false);
+      setText('');
     }
 
     setSelectedQRCode(qrcode);
@@ -199,6 +202,9 @@ export default function Account() {
                 style={isQRCodeExpired ? { filter: 'blur(8px)' } : {}}
               />
             </div>
+            <div className="text-danger modal-body">
+              {text}
+            </div>  
             <div className="modal-footer">
             </div>
           </div>

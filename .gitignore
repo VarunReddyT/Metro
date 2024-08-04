@@ -26,3 +26,7 @@ yarn-error.log*
 *.env
 *a.txt
 *index2.js
+*PaymentForm2.js
+*PaymentFormDisplay.js
+*StripeContainer.js
+*Google.js
