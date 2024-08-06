@@ -42,8 +42,14 @@ router.post('/trigger', async (req, res) => {
     }
     const wf = new WorkflowTriggerRequest(workflow_payload)
 
-    const response = supr_client.workflows.trigger(wf);
-    response.then(res => console.log("response", res));
+    try {
+      const response = await supr_client.workflows.trigger(wf);
+      console.log("response", response);
+      res.status(202).json({ status: 'success', data: response });
+  } catch (error) {
+      console.error('Error triggering workflow:', error);
+      res.status(500).json({ status: 'error', message: 'Failed to trigger workflow' });
+  }
 });
 
 

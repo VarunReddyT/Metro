@@ -46,8 +46,9 @@ export default function BookedTicket() {
         if (!savedTicketDetails) {
           localStorage.setItem('ticketDetails', JSON.stringify(currentTicketDetails));
         }
-
-
+        
+        
+        setLoading(false);
         await Promise.all([
           axios.post('https://metro-backend-eight.vercel.app/api/tickets/bookedticket', {
             username: ticketDetails.username,
@@ -67,7 +68,6 @@ export default function BookedTicket() {
           })
         ]);
 
-        setLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
         setError('There was an error confirming your ticket. Please try again.');
