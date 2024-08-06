@@ -48,7 +48,7 @@ export default function Navbar() {
     }, [location]);
     useEffect(() => {
         const generateSubscriberId = async () => {
-            if (!login || !user) return;
+            if (!login) return;
             try {
                 // const subscriberResponse = await axios.post('http://localhost:4000/api/subsid/subsId_generate');
                 const subscriberResponse = await axios.post('https://metro-backend-eight.vercel.app/api/subsid/subsId_generate',{distinct_id:ticketDetails.username});
