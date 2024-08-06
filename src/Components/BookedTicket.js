@@ -34,7 +34,7 @@ export default function BookedTicket() {
             distance: ticketDetails.distance,
             transactionId: ticketDetails.transactionId,
             paymentMode: ticketDetails.paymentMode,
-            qrCode: '',
+            qrCode: qrResponse.data.qrcode,
             journeyDate: ticketDetails.journeyDate
           }),
           axios.post('https://metro-backend-eight.vercel.app/api/subsid/trigger', {

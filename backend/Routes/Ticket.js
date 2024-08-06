@@ -5,9 +5,9 @@ const ticketschema = require('../schema/TicketSchema.js');
 
 router.post('/bookedticket', async (req, res) => {
     const {username,source, destination, tickets, fare, distance, transactionId, paymentMode, qrCode, journeyDate } = req.body;
-    // if (!username || !source || !destination || !tickets || !fare || !distance || !transactionId || !qrCode || !paymentMode || !journeyDate) {
-    //     return res.status(400).send('Please fill all the fields');
-    // }
+    if (!username || !source || !destination || !tickets || !fare || !distance || !transactionId || !qrCode || !paymentMode || !journeyDate) {
+        return res.status(400).send('Please fill all the fields');
+    }
 
     const ticket = new ticketschema({
         username:username,
