@@ -99,7 +99,7 @@ export default function Navbar() {
                                 themeType='light / dark'
                                 workspaceKey={process.env.REACT_APP_SUPRSEND_WORKSPACE_KEY}
                                 subscriberId={subscriberId} 
-                                distinctId={process.env.REACT_APP_SUPRSEND_DISTINCT_ID}
+                                distinctId={ticketDetails.username} 
                             />
                         )}
                     </ul>
