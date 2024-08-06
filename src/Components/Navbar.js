@@ -94,6 +94,7 @@ export default function Navbar() {
                                     actions: { container: { hoverBackgroundColor: '#349beb' } }, 
                                     expiresText: { color: 'red' },
                                     actionsMenuIcon: { color: 'blue' },
+                                    unreadBackgroundColor: '#d2e8f7'
                                 },
                                   }}
                                 themeType='light / dark'
