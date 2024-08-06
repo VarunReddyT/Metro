@@ -3,6 +3,8 @@ const router = express.Router();
 const userschema = require('../schema/UserSchema.js');
 const jwt = require('jsonwebtoken');
 const bycrypt = require('bcrypt');
+const {Suprsend} = require("@suprsend/node-sdk");
+const supr_client = new Suprsend(process.env.SUPRSEND_WORKSPACE_KEY, process.env.SUPRSEND_WORKSPACE_SECRET);
 
 router.post('/register', async (req, res) => {
     const { name, username, password, gmail, mobilenumber } = req.body;
@@ -13,7 +15,11 @@ router.post('/register', async (req, res) => {
     const hashPassword = await bycrypt.hash(password, 10);
 
     const user = new userschema({ name, username, password : hashPassword, gmail, mobilenumber });
+
+    const suprSendUser = supr_client.user.get_instance(username);
+  
     try{
+        const response = suprSendUser.save()
         await user.save();
         console.log('User registered successfully');
         res.status(200).send('User registered successfully');
@@ -89,5 +95,4 @@ router.get('/getuser', async (req, res) => {
     }
 }
 );
-
 module.exports = router;

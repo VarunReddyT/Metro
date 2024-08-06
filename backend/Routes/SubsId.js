@@ -16,22 +16,23 @@ function hmac_rawurlsafe_base64_string(distinct_id, secret) {
 }
 
 router.post('/subsId_generate', (req, res) => {
+    const { distinct_id } = req.body;
     const secret = process.env.SUPRSEND_INBOX_SECRET;
     if (!secret) {
         return res.status(400).send('Input is required');
     }
-    const subsId = hmac_rawurlsafe_base64_string(process.env.SUPRSEND_DISTINCT_ID, secret);
+    const subsId = hmac_rawurlsafe_base64_string(distinct_id, secret);
     res.send(subsId);
 }
 );
 
 router.post('/trigger', async (req, res) => {
-    const {source,destination} = req.body;
+    const {distinct_id,source,destination} = req.body;
     const workflow_payload = {
         "workflow": process.env.SUPRSEND_WORKFLOW_NAME,
         "recipients": [
           {
-            "distinct_id": process.env.SUPRSEND_DISTINCT_ID,
+            "distinct_id": distinct_id,
           }
         ],
         "data":{
