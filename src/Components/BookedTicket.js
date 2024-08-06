@@ -4,10 +4,10 @@ import axios from 'axios';
 import Loader2 from './Loader2';
 import './css/BookedTicket.css';
 
-
 export default function BookedTicket() {
   const [qrCode, setQrCode] = useState('');
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const { ticketDetails } = useContext(TicketContext);
   const isInitialMount = useRef(true);
 
@@ -15,34 +15,38 @@ export default function BookedTicket() {
     const fetchTicket = async () => {
       if (!ticketDetails) return;
       setLoading(true);
+      setError(null);
+
       try {
-        const response = await axios.get('https://metro-murex.vercel.app/qrcode/ticket', {
-          params: {
-            start: ticketDetails.source,
-            end: ticketDetails.destination
-          }
-        });
+        const [qrResponse, ticketResponse, subsidResponse] = await Promise.all([
+          axios.get('https://metro-murex.vercel.app/qrcode/ticket', {
+            params: {
+              start: ticketDetails.source,
+              end: ticketDetails.destination
+            }
+          }),
+          axios.post('https://metro-backend-eight.vercel.app/api/tickets/bookedticket', {
+            username: ticketDetails.username,
+            source: ticketDetails.source,
+            destination: ticketDetails.destination,
+            tickets: ticketDetails.tickets,
+            fare: ticketDetails.fare,
+            distance: ticketDetails.distance,
+            transactionId: ticketDetails.transactionId,
+            paymentMode: ticketDetails.paymentMode,
+            qrCode: '', // Will update below
+            journeyDate: ticketDetails.journeyDate
+          }),
+          axios.post('https://metro-backend-eight.vercel.app/api/subsid/trigger', {
+            source: ticketDetails.source,
+            destination: ticketDetails.destination
+          })
+        ]);
 
-        setQrCode(response.data.qrcode);
+        const qrCode = qrResponse.data.qrcode;
+        setQrCode(qrCode);
 
-        await axios.post('https://metro-backend-eight.vercel.app/api/tickets/bookedticket', {
-        // await axios.post('http://localhost:4000/api/tickets/bookedticket', {
-          username: ticketDetails.username,
-          source: ticketDetails.source,
-          destination: ticketDetails.destination,
-          tickets: ticketDetails.tickets,
-          fare: ticketDetails.fare,
-          distance: ticketDetails.distance,
-          transactionId: ticketDetails.transactionId,
-          paymentMode: ticketDetails.paymentMode,
-          qrCode: response.data.qrcode,
-          journeyDate: ticketDetails.journeyDate
-        });
-
-        setLoading(false);
-        // await axios.post("http://localhost:4000/api/subsid/trigger", {source: ticketDetails.source, destination: ticketDetails.destination });
-        await axios.post("https://metro-backend-eight.vercel.app/api/subsid/trigger", {source: ticketDetails.source, destination: ticketDetails.destination });
-
+        // Update ticket details with QR code
         const currentTicketDetails = {
           username: ticketDetails.username,
           source: ticketDetails.source,
@@ -52,7 +56,7 @@ export default function BookedTicket() {
           paymentMode: ticketDetails.paymentMode,
           transactionId: ticketDetails.transactionId,
           distance: ticketDetails.distance,
-          qrCode: response.data.qrcode,
+          qrCode: qrCode,
           journeyDate: ticketDetails.journeyDate
         };
 
@@ -61,11 +65,11 @@ export default function BookedTicket() {
           localStorage.setItem('ticketDetails', JSON.stringify(currentTicketDetails));
         }
 
-
-        // await axios.post('https://metro-backend-eight.vercel.app/api/tickets/bookedticket', currentTicketDetails);
-
+        setLoading(false);
       } catch (error) {
-        console.error('Error fetching QR code:', error);
+        console.error('Error fetching data:', error);
+        setError('There was an error confirming your ticket. Please try again.');
+        setLoading(false);
       }
     };
 
@@ -76,22 +80,23 @@ export default function BookedTicket() {
   }, [ticketDetails]);
 
   return (
-
     <div>
-      {loading && <Loader2 /> && (
-        <div className='d-flex align-items-center justify-content-center flex-column'>
-          <div className='waiting-animation'></div>
+      {loading ? (
+        <div className="d-flex align-items-center justify-content-center flex-column">
+          <div className="waiting-animation"></div>
           <h3>Confirming your ticket</h3>
         </div>
-      )
-      }
-      {!loading && (
+      ) : error ? (
+        <div className="alert alert-danger" role="alert">
+          {error}
+        </div>
+      ) : (
         <div>
           <div className="alert alert-danger container" role="alert">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" className="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
               <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4m.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2" />
             </svg>
-            This is a demo application and this is randomly generated QR code. Please do not use this for any commercial purpose.
+            This is a demo application and this is a randomly generated QR code. Please do not use this for any commercial purpose.
           </div>
 
           <div className='container d-flex justify-content-center align-items-center'>
