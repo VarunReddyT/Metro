@@ -34,7 +34,7 @@ export default function BookedTicket() {
             distance: ticketDetails.distance,
             transactionId: ticketDetails.transactionId,
             paymentMode: ticketDetails.paymentMode,
-            qrCode: '', // Will update below
+            qrCode: '',
             journeyDate: ticketDetails.journeyDate
           }),
           axios.post('https://metro-backend-eight.vercel.app/api/subsid/trigger', {
@@ -46,7 +46,6 @@ export default function BookedTicket() {
         const qrCode = qrResponse.data.qrcode;
         setQrCode(qrCode);
 
-        // Update ticket details with QR code
         const currentTicketDetails = {
           username: ticketDetails.username,
           source: ticketDetails.source,
@@ -56,7 +55,7 @@ export default function BookedTicket() {
           paymentMode: ticketDetails.paymentMode,
           transactionId: ticketDetails.transactionId,
           distance: ticketDetails.distance,
-          qrCode: qrCode,
+          qrCode: qrResponse.data.qrcode,
           journeyDate: ticketDetails.journeyDate
         };
 
