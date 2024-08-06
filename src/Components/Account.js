@@ -43,12 +43,12 @@ export default function Account() {
         console.log(error);
       }
     };
-
-    fetchUserDetails();
-  }, [ticketDetails.username]);
+    if(activeButton === 'Profile'){
+      fetchUserDetails();
+    }
+  }, [activeButton,ticketDetails.username]);
 
   useEffect(() => {
-    if (activeButton === 'Bookings') {
       const fetchBookings = async () => {
         try {
           setBookingLoad(true);
@@ -65,8 +65,7 @@ export default function Account() {
         }
       };
       fetchBookings();
-    }
-  }, [activeButton, ticketDetails.username]);
+  }, [ticketDetails.username]);
 
   const closeModal = () => {
     setModal(false);
