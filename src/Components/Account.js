@@ -6,7 +6,7 @@ import Loader2 from './Loader2';
 import { useNavigate } from 'react-router-dom';
 
 export default function Account() {
-  const [activeButton, setActiveButton] = useState('Profile');
+  const [activeButton, setActiveButton] = useState('Bookings');
   const { ticketDetails } = useContext(TicketContext);
   const [userDetails, setUserDetails] = useState({});
   const [bookings, setBookings] = useState([]);
@@ -103,11 +103,11 @@ export default function Account() {
         <div className='row d-flex flex-column'>
           <section className="first-section border border-4 py-4">
             <div className='d-flex justify-content-between'>
-              <button className={`btn ${activeButton === 'Profile' ? 'active' : ''}`} onClick={() => handleClick('Profile')}>
-                Profile
-              </button>
               <button className={`btn ${activeButton === 'Bookings' ? 'active' : ''}`} onClick={() => handleClick('Bookings')}>
                 Bookings
+              </button>
+              <button className={`btn ${activeButton === 'Profile' ? 'active' : ''}`} onClick={() => handleClick('Profile')}>
+                Profile
               </button>
               <button className={`btn ${activeButton === 'Help' ? 'active' : ''}`} onClick={() => handleClick('Help')}>
                 Help

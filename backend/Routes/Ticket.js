@@ -5,7 +5,6 @@ const ticketschema = require('../schema/TicketSchema.js');
 
 router.post('/bookedticket', async (req, res) => {
     const {username,source, destination, tickets, fare, distance, transactionId, paymentMode, qrCode, journeyDate } = req.body;
-    console.log(req.body);
     if (!username || !source || !destination || !tickets || !fare || !distance || !transactionId || !qrCode || !paymentMode || !journeyDate) {
         return res.status(400).send('Please fill all the fields');
     }
@@ -39,12 +38,13 @@ router.get('/getticket', async (req, res) => {
     if (!username) {
         return res.status(400).send('Please fill all the fields');
     }
-    const ticket = await ticketschema.find({username});
-    if (!ticket) {
+    const tickets = await ticketschema.find({ username }).sort({ journeyDate: -1 });
+
+    if (!tickets) {
         return res.status(400).send('No tickets found');
     }
     try{
-        res.send(ticket);
+        res.send(tickets);
     }
     catch(err){
         res.status(500).send('Error fetching ticket. Please try again.');
