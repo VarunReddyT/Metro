@@ -31,7 +31,7 @@ router.post('/trigger', async (req, res) => {
         "workflow": process.env.SUPRSEND_WORKFLOW_NAME,
         "recipients": [
           {
-            "distinct_id": process.end.SUPRSEND_DISTINCT_ID,
+            "distinct_id": process.env.SUPRSEND_DISTINCT_ID,
           }
         ],
         "data":{
