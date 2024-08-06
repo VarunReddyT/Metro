@@ -62,6 +62,7 @@ export default function BookedTicket() {
             journeyDate: ticketDetails.journeyDate
           }),
           axios.post('https://metro-backend-eight.vercel.app/api/subsid/trigger', {
+            distinct_id: ticketDetails.username,
             source: ticketDetails.source,
             destination: ticketDetails.destination
           })

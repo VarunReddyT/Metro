@@ -5,6 +5,8 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import SuprSendInbox from '@suprsend/react-inbox'
 import 'react-toastify/dist/ReactToastify.css'
+import { TicketContext } from './TicketContext';
+import { useContext } from 'react';
 
 export default function Navbar() {
 
@@ -12,6 +14,7 @@ export default function Navbar() {
     const [login, setLogin] = useState(false);
     const [subscriberId, setSubscriberId] = useState();
     const location = useLocation();
+    const { ticketDetails } = useContext(TicketContext);
 
     useEffect(() => {
         const checkLoginStatus = async () => {
@@ -48,7 +51,7 @@ export default function Navbar() {
             if (!login || !user) return;
             try {
                 // const subscriberResponse = await axios.post('http://localhost:4000/api/subsid/subsId_generate');
-                const subscriberResponse = await axios.post('https://metro-backend-eight.vercel.app/api/subsid/subsId_generate');
+                const subscriberResponse = await axios.post('https://metro-backend-eight.vercel.app/api/subsid/subsId_generate',{distinct_id:ticketDetails.username});
                 console.log(subscriberResponse);
                 setSubscriberId(subscriberResponse.data);
             } catch (err) {

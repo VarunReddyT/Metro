@@ -21,8 +21,13 @@ router.post('/subsId_generate', (req, res) => {
     if (!secret) {
         return res.status(400).send('Input is required');
     }
-    const subsId = hmac_rawurlsafe_base64_string(distinct_id, secret);
-    res.send(subsId);
+    try{
+      const subsId = hmac_rawurlsafe_base64_string(distinct_id, secret);  
+      res.status(200).send(subsId);
+    }
+    catch(err){
+        res.status(500).send('Error generating subsId. Please try again.');
+    }
 }
 );
 
