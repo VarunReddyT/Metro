@@ -18,30 +18,12 @@ export default function BookedTicket() {
       setError(null);
 
       try {
-        const [qrResponse, ticketResponse, subsidResponse] = await Promise.all([
-          axios.get('https://metro-murex.vercel.app/qrcode/ticket', {
-            params: {
-              start: ticketDetails.source,
-              end: ticketDetails.destination
-            }
-          }),
-          axios.post('https://metro-backend-eight.vercel.app/api/tickets/bookedticket', {
-            username: ticketDetails.username,
-            source: ticketDetails.source,
-            destination: ticketDetails.destination,
-            tickets: ticketDetails.tickets,
-            fare: ticketDetails.fare,
-            distance: ticketDetails.distance,
-            transactionId: ticketDetails.transactionId,
-            paymentMode: ticketDetails.paymentMode,
-            qrCode: qrResponse.data.qrcode,
-            journeyDate: ticketDetails.journeyDate
-          }),
-          axios.post('https://metro-backend-eight.vercel.app/api/subsid/trigger', {
-            source: ticketDetails.source,
-            destination: ticketDetails.destination
-          })
-        ]);
+        const qrResponse = await axios.get('https://metro-murex.vercel.app/qrcode/ticket', {
+          params: {
+            start: ticketDetails.source,
+            end: ticketDetails.destination
+          }
+        });
 
         const qrCode = qrResponse.data.qrcode;
         setQrCode(qrCode);
@@ -55,14 +37,35 @@ export default function BookedTicket() {
           paymentMode: ticketDetails.paymentMode,
           transactionId: ticketDetails.transactionId,
           distance: ticketDetails.distance,
-          qrCode: qrResponse.data.qrcode,
+          qrCode: qrCode,
           journeyDate: ticketDetails.journeyDate
         };
+
 
         const savedTicketDetails = JSON.parse(localStorage.getItem('ticketDetails'));
         if (!savedTicketDetails) {
           localStorage.setItem('ticketDetails', JSON.stringify(currentTicketDetails));
         }
+
+
+        await Promise.all([
+          axios.post('https://metro-backend-eight.vercel.app/api/tickets/bookedticket', {
+            username: ticketDetails.username,
+            source: ticketDetails.source,
+            destination: ticketDetails.destination,
+            tickets: ticketDetails.tickets,
+            fare: ticketDetails.fare,
+            distance: ticketDetails.distance,
+            transactionId: ticketDetails.transactionId,
+            paymentMode: ticketDetails.paymentMode,
+            qrCode: qrCode,
+            journeyDate: ticketDetails.journeyDate
+          }),
+          axios.post('https://metro-backend-eight.vercel.app/api/subsid/trigger', {
+            source: ticketDetails.source,
+            destination: ticketDetails.destination
+          })
+        ]);
 
         setLoading(false);
       } catch (error) {
