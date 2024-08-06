@@ -47,9 +47,8 @@ export default function BookedTicket() {
           localStorage.setItem('ticketDetails', JSON.stringify(currentTicketDetails));
         }
         
-        
         setLoading(false);
-        await Promise.all([
+        const [ticketPostResponse, subsidPostResponse] = await Promise.all([
           axios.post('https://metro-backend-eight.vercel.app/api/tickets/bookedticket', {
             username: ticketDetails.username,
             source: ticketDetails.source,
